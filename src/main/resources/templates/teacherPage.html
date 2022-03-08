@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/teacherPage.css}">
+	<title>Teacher Page</title>
+</head>
+
+<body>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+	<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+		<div class="container-fluid">
+
+			<a id="timeLine" class="navbar-brand" style="width: 75px; padding: 8px;">00:00:00</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#newVariantModel">New variant</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#newExamModel">New exam</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="/testVariants">Test variants</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#deleteExamModel">Delete exam</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#" th:href="@{/logout}">Logout</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</nav>
+
+	<div class="audios">
+		<div class="accordion accordion-flush" id="accordionFlushExample" style="padding: 10px;">
+			<p align="center" th:if="${exams.size() == 0}">There is no exams yet</p>
+			<div class="accordion-item" th:each="exam : ${exams}">
+				<h1 class="accordion-header" th:id="${'heading_'+ exam.getId()}">
+					<button th:text="${exam.getExamName()}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#flush_'+ exam.getId()}" aria-expanded="false" th:aria-controls="${'flush_'+ exam.getId()}" style="">
+						Training name
+					</button>
+				</h1>
+
+				<div th:id="${'flush_'+ exam.getId()}" class="accordion-collapse collapse" th:aria-labelledby="${'heading_'+ exam.getId()}" data-bs-parent="#accordionFlushExample">
+					<div th:each="audio : ${exam.getAudioFiles()}" class="accordion-body" style="border: 4px solid whitesmoke;">
+						<figure>
+							<h5 th:text="${audio.getAudioName()}" style="padding-left: 25px;">Student name</h5>
+							<audio controls th:src="${audio.getAudioPath()}" preload="metadata">Your browser does not support the<code>audio</code> element.</audio>
+						</figure>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="modal fade" id="newVariantModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Create new variant</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					<form id="newVariantForm" name="newVariantForm" th:action="@{/teacher/newVariant}" enctype="multipart/form-data" method="POST" onsubmit="return validateForm();">
+						<div class="form-floating">
+							<textarea class="form-control" placeholder="Write here task #1" id="taskText1" name="taskText1"></textarea>
+							<label for="taskText1">Task 1</label>
+						</div>
+
+						<div class="form-floating">
+							<textarea class="form-control" placeholder="Write here task #2" id="taskText2" name="taskText2"></textarea>
+							<label for="taskText2">Task 2</label>
+						</div>
+
+						<div class="mb-3">
+							<label for="taskFile2" class="form-label">Attach file for Task 2: Photo</label>
+							<input class="form-control" type="file" id="taskFile2" name="taskFile2" accept="image/*">
+						</div>
+
+						<div class="form-floating">
+							<textarea class="form-control" placeholder="Write here task #3" id="taskText3" name="taskText3"></textarea>
+							<label for="taskText3">Task 3</label>
+						</div>
+
+						<div class="mb-3">
+							<label for="taskFile3" class="form-label">Attach file for Task 3: Audio</label>
+							<input class="form-control" type="file" id="taskFile3" name="taskFile3" accept="audio/*">
+						</div>
+
+						<div class="form-floating">
+							<textarea class="form-control" placeholder="Write here task #4" id="taskText4" name="taskText4"></textarea>
+							<label for="taskText4">Task 4</label>
+						</div>
+
+						<div class="mb-3">
+							<label for="taskFiles4" class="form-label">Attach files for Task 4: Two Photos</label>
+							<input class="form-control" type="file" id="taskFiles4" name="taskFiles4" accept="image/*" multiple>
+						</div>
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="submit" form="newVariantForm" class="btn btn-primary">Create</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="newExamModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel1">Create new exam</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p> To create new exam choose date and press create. Login and password you can find on your email.</p>
+
+					<div class="container">
+						<div class="row text-center">
+							<form id="newExam" modelAttribute="newExam" th:action="@{/teacher/newExam}" method="POST">
+								<input type="date" id="datePicker" name="datePicker" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+							</form>
+						</div>
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="submit" form="newExam" class="btn btn-primary">Create</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="deleteExamModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel2">Delete exam</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>Choose exam which you want to delete</p>
+
+					<form id="deleteExam" name="deleteExam" th:action="@{/teacher/deleteExam}" method="POST">
+						<div class="container">
+							<div class="row">
+								<div th:each="exam : ${exams}" class="form-check col-auto pt-3 pb-3">
+									<input class="form-check-input" type="radio" th:id="${exam.getId()}" th:value="${exam.getId()}" name="examId">
+									<label th:text="${exam.getExamName()}" class="form-check-label" th:for="${exam.getId()}">Number</label>
+								</div>
+							</div>
+						</div>
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="submit" form="deleteExam" class="btn btn-primary">Delete</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script>
+		var date = new Date();
+		var time;
+
+		function getTime() {
+			date = new Date();
+			time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+			document.getElementById("timeLine").innerHTML = time;
+		}
+
+		setInterval(getTime, 1000);
+
+		const datePicker = document.getElementById('datePicker');
+		var today = date.getUTCFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0');
+		datePicker.value = today;
+		datePicker.min = today;
+
+		function validateForm() {
+			var taskText1 = document.forms["newVariantForm"]["taskText1"].value;
+			var taskText2 = document.forms["newVariantForm"]["taskText2"].value;
+			var taskText3 = document.forms["newVariantForm"]["taskText3"].value;
+			var taskText4 = document.forms["newVariantForm"]["taskText4"].value;
+
+			var taskFile2 = document.getElementById('taskFile2');
+			var taskFile3 = document.getElementById('taskFile3');
+			var taskFiles4 = document.getElementById('taskFiles4');
+
+			if(taskText1 == null || taskText1 === ""){
+				alert("Please fill Task1 field");
+				return false;
+			}
+
+			if(taskText2 == null || taskText2 === ""){
+				alert("Please fill Task2 field");
+				return false;
+			}
+
+			if(taskText3 == null || taskText3 === ""){
+				alert("Please fill Task3 field");
+				return false;
+			}
+
+			if(taskText4 == null || taskText4 === ""){
+				alert("Please fill Task4 field");
+				return false;
+			}
+
+			if(taskFile2.files.length !== 1 ){
+				alert("Number of files for Task2 must be 1");
+				return false;
+			}
+
+			if(taskFile3.files.length !== 1 ){
+				alert("Number of files for Task3 must be 1");
+				return false;
+			}
+
+			if(taskFiles4.files.length !== 2){
+				alert("Number of files for Task4 must be 2");
+				return false;
+			}
+
+			return true;
+		}
+
+		const textArea = document.getElementsByTagName("textarea");
+		for (let i = 0; i < textArea.length; i++) {
+			textArea[i].addEventListener("input", OnInput, false);
+		}
+
+		function OnInput() {
+			this.style.height = "auto";
+			this.style.height = (this.scrollHeight) + "px";
+		}
+	</script>
+
+</body>
+
+</html>

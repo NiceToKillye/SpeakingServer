@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/speakingPage.css}">
+    <title>Speaking</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <div class="task">
+        <div class="container">
+            <p id="task" class="text-break" style="color: white;">Task text</p>
+        </div>
+    </div>
+    
+    <div id="imgContainer" class="container" style="display: none;">
+        <div class="row text-center">
+            <div id="imageContainer1" class="col" style="display: none;">
+                <img id="picture1" th:src="${variant.getPhotoLink1()}" class="img-fluid" alt="Picture 1"
+                style="height: 50vh;">
+            </div>
+            <div id="imageContainer2" class="col" style="display: none;">
+                <img id="picture2" th:src="${variant.getPhotoLink1()}" class="img-fluid" alt="Picture 2"
+                style="height: 50vh;">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid" style="position: fixed; bottom: 0; left: 0; margin-bottom: 10px;">
+        <div id="progressBlock" class="progress" style="height: 25px;">
+            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+
+    <script>
+        const task = document.getElementById('task');
+
+        const progressBar = document.getElementById('progressBar');
+
+        const image1 = document.getElementById('imageContainer1');
+        const image2 = document.getElementById('imageContainer2');
+        const imagesContainer = document.getElementById('imgContainer');
+
+        const picture1 = document.getElementById('picture1');
+        const picture2 = document.getElementById('picture2');
+
+        const task1 = '[[${variant.getTaskText1()}]]';
+        const task2 = "[[${variant.getTaskText2()}]]";
+        const task3 = "[[${variant.getTaskText3()}]]";
+        const task4 = "[[${variant.getTaskText4()}]]";
+
+        const image2Link = "[[${variant.getPhotoLink2()}]]";
+        const image3Link = "[[${variant.getPhotoLink3()}]]";
+
+        navigator.permissions.query({name:'microphone'}).then(function(result) {
+            if (result.state === 'granted') {
+                navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(recordAudio);
+            }
+            else {
+                navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(recordAudio).catch(e => {
+                    alert("Turn on mic");
+                    console.log(e);
+                });
+            }
+        });
+
+        const recordAudio = function(stream) {
+            var start = 0;
+            var progressBarId;
+
+            var audio1Duration;
+            var audio1 = new Audio('audio/audio.mp3');
+
+            var audio2Duration;
+            var audioLink2 = "[[${variant.getAudioLink()}]]";
+            var audio2 = new Audio(audioLink2);
+
+            const recordedChunks = [];
+            const options = {mimeType: 'audio/webm'};
+            const mediaRecorder = new MediaRecorder(stream, options);
+
+            audio1.addEventListener("loadedmetadata", function(){
+                audio1Duration = audio1.duration;
+            });
+
+            audio2.addEventListener("loadedmetadata", function(){
+                audio2Duration = audio2.duration;
+            });
+
+            mediaRecorder.addEventListener('dataavailable', function(e) {
+                if (e.data.size > 0) recordedChunks.push(e.data);
+            });
+
+            function stopRecording() {
+                if (mediaRecorder.state === "recording")
+                    mediaRecorder.stop();
+            }
+
+            function pauseRecording(){
+                if (mediaRecorder.state === "recording")
+                    mediaRecorder.pause();
+            }
+
+            function resumeRecording(){
+                if (mediaRecorder.state === "paused")
+                    mediaRecorder.resume();
+            }
+
+            mediaRecorder.addEventListener('stop', async function () {
+                var fileName = localStorage.getItem('name');
+
+                let file = await fetch(URL.createObjectURL(new Blob(recordedChunks)))
+                    .then(r => r.blob())
+                    .then(blobFile => new File([blobFile], fileName, {type: "audio/webm"}));
+
+                var form = new FormData();
+                var request = new XMLHttpRequest();
+
+                form.append("audio", file, fileName);
+                request.onload = function (e) {
+                    if (this.readyState === 4) {
+                        console.log("Server returned: ", e.target.responseText);
+                    }
+                };
+                request.open('POST', window.location.href, true);
+                request.send(form);
+
+                alert("Test ended");
+                window.location.href = "/variant";
+            });
+
+            function playAudio() {
+                return new Promise(res=>{
+                    audio1.play()
+                    audio1.onended = res
+                })
+            }
+
+            function updateProgressBar(increaseValue) {
+                start = start + increaseValue;
+                progressBar.style.width = String(start) + "%";
+            }
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            async function readingTask(textForTask, readingTime, increaseValue){
+                task.innerHTML = textForTask;
+                progressBarId = setInterval(updateProgressBar, 100, increaseValue);
+                await sleep(readingTime);
+                clearInterval(progressBarId);
+            }
+
+            async function listenAudio() {
+                progressBar.style.width = "0%";
+                start = 0;
+                await playAudio();
+            }
+
+            async function recordStudent(isStarted, isEnded, recordingTime, increaseValue){
+                progressBarId = setInterval(updateProgressBar, 100, increaseValue);
+                if(!isStarted){
+                    mediaRecorder.start();
+                }
+                else{
+                    resumeRecording();
+                }
+                await sleep(recordingTime);
+                clearInterval(progressBarId);
+                if(!isEnded){
+                    pauseRecording();
+                }
+                else{
+                    stopRecording();
+                }
+                progressBar.style.width = "0%";
+                start = 0;
+            }
+
+            function contentToHtml(text) {
+                return text
+                    .split('\n')
+                    .map(paragraph => `<p class="text-break">${paragraph}</p>`)
+                    .join('')
+            }
+
+            async function firstTask() {
+
+                await readingTask(contentToHtml(task1), 90000, 0.1111);
+                await listenAudio();
+                await recordStudent(false, false, 90000, 0.1111);
+                await sleep(1000);
+
+                image1.style.display = "block";
+                imagesContainer.style.display = "block";
+                await readingTask(contentToHtml(task2), 90000, 0.1111);
+                await listenAudio();
+                await recordStudent(true, false, 80000, 0.125);
+                await sleep(1000);
+
+                imagesContainer.style.display = "none";
+                await readingTask(contentToHtml(task3), 20000, 0.5);
+                await listenAudio();
+                audio2.play();
+                await recordStudent(true, false, (audio2Duration * 1000), (10 / audio2Duration));
+                await sleep(1000);
+
+                picture1.src = image2Link;
+                picture2.src = image3Link;
+                image1.style.display = "block";
+                image2.style.display = "block";
+                imagesContainer.style.display = "block";
+                await readingTask(contentToHtml(task4), 150000, 0.0667); //80%
+                await listenAudio();
+                await recordStudent(true, true, 180000, 0.0556);
+
+                document.getElementById('progressBlock').style.display = "none";
+            }
+            firstTask();
+        };
+    </script>
+
+</body>
+
+</html>

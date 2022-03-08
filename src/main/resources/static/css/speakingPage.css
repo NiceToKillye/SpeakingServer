@@ -1,0 +1,16 @@
+.task{
+    width: auto;
+
+    background: #0d6efd;
+
+    margin-top: 5%;
+    margin-bottom: 5%;
+    
+    margin-left: 15%;
+    margin-right: 15%;
+    padding-left: var(--bs-gutter-x,.75rem);
+    padding-right: var(--bs-gutter-x,.75rem);
+
+    border-radius: 1.5em;
+    box-shadow: 0 11px 35px 2px rgba(0, 0, 0б 0.14);
+}

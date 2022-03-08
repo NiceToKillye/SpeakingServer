@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+target/
+storage/
+.idea/dataSources/
+.idea/httpRequests/
+
+/.idea/workspace.xml
+/.idea/dataSources.local.xml
+src/main/resources/application.properties
+src/main/resources/application-dev.properties
