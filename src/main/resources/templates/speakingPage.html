@@ -61,11 +61,11 @@
 
         navigator.permissions.query({name:'microphone'}).then(function(result) {
             if (result.state === 'granted') {
-                navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(recordAudio);
+                navigator.mediaDevices.getUserMedia({ audio: true }).then(recordAudio);
             }
             else {
-                navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(recordAudio).catch(e => {
-                    alert("Turn on mic");
+                navigator.mediaDevices.getUserMedia({ audio: true }).then(recordAudio).catch(e => {
+                    alert("Turn on microphone");
                     console.log(e);
                 });
             }
@@ -76,7 +76,8 @@
             var progressBarId;
 
             var audio1Duration;
-            var audio1 = new Audio('audio/audio.mp3');
+            var audioLink1 = 'audio/audio.mp3';
+            var audio1 = new Audio(audioLink1);
 
             var audio2Duration;
             var audioLink2 = "[[${variant.getAudioLink()}]]";
@@ -95,7 +96,7 @@
             });
 
             mediaRecorder.addEventListener('dataavailable', function(e) {
-                if (e.data.size > 0) recordedChunks.push(e.data);
+                recordedChunks.push(e.data);
             });
 
             function stopRecording() {

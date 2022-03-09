@@ -17,6 +17,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col text-center">
+					<div th:if="${param.error}" style="padding-top: 5%">
+						<h6 class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</h6>
+					</div>
 					<form class="form-floating" th:action="@{/login}" method="POST">
 						<div class="form-floating mb-3 mt-3">
 							<input type="login" class="form-control" name="username" id="username" autocomplete="username" placeholder="Login">

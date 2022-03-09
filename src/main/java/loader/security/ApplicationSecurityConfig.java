@@ -1,12 +1,8 @@
 package loader.security;
 
-import java.util.Date;
-
-import loader.entity.Exam;
 import loader.entity.User;
 import loader.custom.ConfigProperties;
 import static loader.entity.UserRole.*;
-import loader.repository.ExamRepository;
 import loader.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
@@ -27,20 +23,17 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserRepository userRepository;
-    private final ExamRepository examRepository;
     private final PasswordEncoder passwordEncoder;
     private final ConfigProperties configProperties;
     private final UserDetailsService userDetailsService;
 
     public ApplicationSecurityConfig(
             UserRepository userRepository,
-            ExamRepository examRepository,
             PasswordEncoder passwordEncoder,
             ConfigProperties configProperties,
             UserDetailsService userDetailsService)
     {
         this.userRepository = userRepository;
-        this.examRepository = examRepository;
         this.passwordEncoder = passwordEncoder;
         this.configProperties = configProperties;
         this.userDetailsService = userDetailsService;
@@ -62,36 +55,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().permitAll()
                 .loginPage("/login").permitAll()
+                .failureUrl("/login?error=true")
                 .successHandler(myAuthenticationSuccessHandler());
     }
 
     @PostConstruct
     private void generateUsers(){
-        User teacher = new User(
-                "alexeee33@gmail.com",
-                "username1",
-                passwordEncoder.encode("password1"),
-                false,
-                TEACHER);
-
         User admin = new User(
                 configProperties.getAdminEmail(),
                 configProperties.getAdminUsername(),
                 passwordEncoder.encode(configProperties.getAdminPassword()),
                 true,
                 ADMIN);
-
-        Exam exam = new Exam(
-                teacher,
-                new Date(),
-                "exam1",
-                passwordEncoder.encode("password3"),
-                EXAM,
-                "");
-
-        userRepository.save(teacher);
         userRepository.save(admin);
-        examRepository.save(exam);
     }
 
     @Bean

@@ -16,7 +16,7 @@
 <div class="container">
     <div class="row">
         <p align="center" th:if="${teachers.size() == 0}">There is no teachers yet</p>
-        <form id="enableTeacher" name="enableTeacher" th:action="@{/admin}" method="POST">
+        <form id="enableTeacher" name="enableTeacher" th:action="@{/admin}" onsubmit="return validateForm();" method="POST">
             <div class="container">
                 <div class="row">
                     <div th:each="teacher : ${teachers}" class="form-check col-auto pt-3 pb-3">
@@ -31,6 +31,26 @@
     </div>
 </div>
 </div>
+
+<script>
+    function validateForm() {
+        let teachers = document.querySelectorAll(".form-check-input");
+        let checked = true;
+
+        if(teachers.length === 0){
+            return false;
+        }
+
+        teachers.forEach(teacher => {
+            if (teacher.checked === false){
+                checked = false;
+            }
+        })
+
+        return checked;
+    }
+
+</script>
 
 </body>
 </html>

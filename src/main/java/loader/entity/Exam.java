@@ -104,6 +104,7 @@ public class Exam implements UserDetails {
                 ", packageLink='" + packageLink + '\'' +
                 ", userRole=" + userRole +
                 ", teacher=" + teacher +
+                ", audioFiles=" + audioFiles +
                 '}';
     }
 
