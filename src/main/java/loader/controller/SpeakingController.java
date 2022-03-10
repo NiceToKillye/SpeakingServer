@@ -39,7 +39,7 @@ public class SpeakingController {
             return new ModelAndView("redirect:/variant");
         }
         model.addAttribute("variant", variant);
-        return new ModelAndView("/speakingPage");
+        return new ModelAndView("speakingPage");
     }
 
 

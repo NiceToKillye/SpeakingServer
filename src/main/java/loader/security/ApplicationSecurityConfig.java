@@ -61,6 +61,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @PostConstruct
     private void generateUsers(){
+        if(userRepository.findUserByUsername(configProperties.getAdminUsername()).isPresent()){
+            return;
+        }
+
         User admin = new User(
                 configProperties.getAdminEmail(),
                 configProperties.getAdminUsername(),
