@@ -45,7 +45,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 //.requiresChannel(channel -> channel.anyRequest().requiresSecure())
                 .authorizeRequests()
-                .antMatchers("/recovery", "/registration", "/css/*").permitAll()
+                .antMatchers("/", "/recovery", "/registration", "/css/*").permitAll()
 
                 .antMatchers("/admin").hasRole(ADMIN.name())
                 .antMatchers("/teacher", "/testVariants").hasRole(TEACHER.name())

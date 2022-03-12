@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class TemplateController {
 
+    @GetMapping("/")
+    public String loadIndex(){
+        return "indexPage";
+    }
+
     @GetMapping("login")
     public String loadLogin(){
         return "loginPage";
