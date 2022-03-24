@@ -1,6 +1,7 @@
 package loader.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import java.text.ParseException;
@@ -11,12 +12,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import loader.entity.Exam;
-import loader.entity.User;
-import loader.entity.Variant;
-import loader.entity.UserRole;
+import loader.entity.*;
 import loader.custom.VariantForm;
 import loader.custom.ConfigProperties;
+import loader.repository.AudioFileRepository;
 import loader.repository.ExamRepository;
 import loader.repository.UserRepository;
 import loader.repository.VariantRepository;
@@ -39,6 +38,7 @@ public class TeacherService {
     UserRepository userRepository;
     ConfigProperties configProperties;
     VariantRepository variantRepository;
+    AudioFileRepository audioFileRepository;
     private final JavaMailSender mailSender;
 
     private final PasswordEncoder passwordEncoder;
@@ -59,7 +59,8 @@ public class TeacherService {
                           UserRepository userRepository,
                           PasswordEncoder passwordEncoder,
                           ConfigProperties configProperties,
-                          VariantRepository variantRepository)
+                          VariantRepository variantRepository,
+                          AudioFileRepository audioFileRepository)
     {
         this.mailSender = mailSender;
         this.examRepository = examRepository;
@@ -67,6 +68,7 @@ public class TeacherService {
         this.passwordEncoder = passwordEncoder;
         this.configProperties = configProperties;
         this.variantRepository = variantRepository;
+        this.audioFileRepository = audioFileRepository;
     }
 
     public void createExam(String date, String username) throws ParseException, IOException {
@@ -146,11 +148,13 @@ public class TeacherService {
         if(examOptional.isEmpty()) {
             throw new NullPointerException("Exam with this id = " + examId + " does not exist");
         }
+        Exam exam = examOptional.get();
+        String path = exam.getPackageLink();
 
-        String path = examOptional.get().getPackageLink();
-        System.out.println(path);
+        Optional<List<AudioFile>> optionalAudioFiles = audioFileRepository.findAllByExam(exam);
+        optionalAudioFiles.ifPresent(audioFiles -> audioFileRepository.deleteAll(audioFiles));
+
         FileSystemUtils.deleteRecursively(Paths.get(path));
-
         examRepository.deleteById(examId);
     }
 }

@@ -1,8 +1,10 @@
 # Default ignored files
 /shelf/
 scripts/
+logs/
 target/
 storage/
+.idea/shelf
 .idea/dataSources/
 .idea/httpRequests/
 
