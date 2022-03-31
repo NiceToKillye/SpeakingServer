@@ -78,6 +78,12 @@
 				<div class="modal-body">
 
 					<form id="newVariantForm" name="newVariantForm" th:action="@{/teacher/newVariant}" enctype="multipart/form-data" method="POST" onsubmit="return validateForm();">
+
+						<div class="form-floating">
+							<textarea class="form-control" placeholder="Write variant name here" id="variantName" name="variantName"></textarea>
+							<label for="variantName">Variant name</label>
+						</div>
+
 						<div class="form-floating">
 							<textarea class="form-control" placeholder="Write here task #1" id="taskText1" name="taskText1"></textarea>
 							<label for="taskText1">Task 1</label>
@@ -200,14 +206,20 @@
 		datePicker.min = today;
 
 		function validateForm() {
-			var taskText1 = document.forms["newVariantForm"]["taskText1"].value;
-			var taskText2 = document.forms["newVariantForm"]["taskText2"].value;
-			var taskText3 = document.forms["newVariantForm"]["taskText3"].value;
-			var taskText4 = document.forms["newVariantForm"]["taskText4"].value;
+			let variantName = document.forms["newVariantForm"]["variantName"].value;
+			let taskText1 = document.forms["newVariantForm"]["taskText1"].value;
+			let taskText2 = document.forms["newVariantForm"]["taskText2"].value;
+			let taskText3 = document.forms["newVariantForm"]["taskText3"].value;
+			let taskText4 = document.forms["newVariantForm"]["taskText4"].value;
 
-			var taskFile2 = document.getElementById('taskFile2');
-			var taskFile3 = document.getElementById('taskFile3');
-			var taskFiles4 = document.getElementById('taskFiles4');
+			let taskFile2 = document.getElementById('taskFile2');
+			let taskFile3 = document.getElementById('taskFile3');
+			let taskFiles4 = document.getElementById('taskFiles4');
+
+			if(variantName == null || variantName === ""){
+				alert("Please fill Variant name field");
+				return false;
+			}
 
 			if(taskText1 == null || taskText1 === ""){
 				alert("Please fill Task1 field");

@@ -1,6 +1,6 @@
 package loader.controller;
 
-import loader.custom.Counter;
+
 import org.springframework.ui.Model;
 import loader.service.VariantService;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,6 @@ public class VariantController {
     @GetMapping
     public String index(Model model){
         model.addAttribute("variants", variantService.getAllVariants());
-        model.addAttribute("counter", new Counter());
         return "variantPage";
     }
 }

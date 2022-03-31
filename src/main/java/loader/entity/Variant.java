@@ -2,9 +2,7 @@ package loader.entity;
 
 import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Setter
@@ -24,6 +22,12 @@ public class Variant {
             generator = "variant_sequence"
     )
     private long id;
+
+    @Column(
+            name = "variantName",
+            nullable = false
+    )
+    private String variantName;
 
     @Column(
             name = "taskText1",
@@ -84,7 +88,8 @@ public class Variant {
                    String audioLink,
                    String photoLink1,
                    String photoLink2,
-                   String photoLink3)
+                   String photoLink3,
+                   String variantName)
     {
         this.taskText1 = taskText1;
         this.taskText2 = taskText2;
@@ -94,12 +99,14 @@ public class Variant {
         this.photoLink1 = photoLink1;
         this.photoLink2 = photoLink2;
         this.photoLink3 = photoLink3;
+        this.variantName = variantName;
     }
 
     @Override
     public String toString() {
         return "Variant{" +
                 "id=" + id +
+                ", variantName='" + variantName + '\'' +
                 ", taskText1='" + taskText1 + '\'' +
                 ", taskText2='" + taskText2 + '\'' +
                 ", taskText3='" + taskText3 + '\'' +

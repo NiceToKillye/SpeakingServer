@@ -21,10 +21,10 @@
             </div>
 
             <div class="container">
-                <div class="row" th:with="mycounter = ${counter.getValue()}">
-                    <div class="form-check col-auto pt-3 pb-3" th:each="variant : ${variants}" th:with="mycounter=${counter.incrementAndGet()}">
+                <div class="row">
+                    <div class="form-check col-auto pt-3 pb-3" th:each="variant : ${variants}">
                         <input class="form-check-input" type="radio" th:id="${variant.getId()}" th:value="${variant.getId()}" name="variantId">
-                        <label class="form-check-label" th:text="${counter.getValue()}" th:for="${variant.getId()}">Number</label>
+                        <label class="form-check-label" th:text="${variant.getVariantName()}" th:for="${variant.getId()}">Number</label>
                     </div>
                 </div>
             </div>

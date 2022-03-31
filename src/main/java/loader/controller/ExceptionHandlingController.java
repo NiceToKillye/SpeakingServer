@@ -3,10 +3,13 @@ package loader.controller;
 import loader.exception.EmailWasTakenException;
 import loader.exception.LoginWasTakenException;
 
+import loader.exception.VariantNameExists;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import javax.servlet.RequestDispatcher;
 
 @ControllerAdvice
 public class ExceptionHandlingController {
@@ -43,5 +46,17 @@ public class ExceptionHandlingController {
         model.addAttribute("show", true);
         model.addAttribute("errorMessage", message);
         return "registerPage";
+    }
+
+    @ExceptionHandler({
+            VariantNameExists.class
+    })
+    public String newVariant(Model model, Exception exception){
+
+        model.addAttribute("previousPage", "/teacher");
+        model.addAttribute("errorMessage", exception.getMessage());
+        model.addAttribute("errorCode","409");
+
+        return "errorPage";
     }
 }

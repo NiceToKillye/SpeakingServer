@@ -1,6 +1,5 @@
 package loader.controller;
 
-import loader.custom.Counter;
 import loader.service.VariantService;
 import loader.repository.VariantRepository;
 
@@ -29,8 +28,6 @@ public class TestVariantsController {
 
     @GetMapping
     public String index(Model model){
-        model.addAttribute("counter", new Counter());
-        model.addAttribute("counterForDelete", new Counter());
         model.addAttribute("variants", variantRepository.findAll());
         return "testVariantsPage";
     }

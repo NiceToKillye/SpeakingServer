@@ -14,6 +14,7 @@ public class VariantForm {
     private String taskText2;
     private String taskText3;
     private String taskText4;
+    private String variantName;
     private MultipartFile taskFile2;
     private MultipartFile taskFile3;
     private MultipartFile[] taskFiles4;

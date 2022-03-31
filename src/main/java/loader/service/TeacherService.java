@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import loader.entity.*;
 import loader.custom.VariantForm;
 import loader.custom.ConfigProperties;
+import loader.exception.VariantNameExists;
 import loader.repository.AudioFileRepository;
 import loader.repository.ExamRepository;
 import loader.repository.UserRepository;
@@ -107,7 +108,12 @@ public class TeacherService {
         mailSender.send(message);
     }
 
-    public void createVariant(VariantForm variantForm) throws IOException {
+    public void createVariant(VariantForm variantForm) throws IOException, VariantNameExists {
+
+        if(variantRepository.existsByVariantName(variantForm.getVariantName())){
+            throw new VariantNameExists();
+        }
+
         String packageLink = configProperties.getVariantStorage() + "/" + (int) variantRepository.count();
         Files.createDirectories(Paths.get(packageLink));
 
@@ -134,7 +140,8 @@ public class TeacherService {
                 audioPath,
                 photo1Path,
                 photo2Path,
-                photo3Path);
+                photo3Path,
+                variantForm.getVariantName());
 
         variantRepository.save(variant);
     }
