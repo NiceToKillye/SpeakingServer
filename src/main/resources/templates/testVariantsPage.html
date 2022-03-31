@@ -54,12 +54,13 @@
 
 						<div class="container" style="border-bottom: 4px solid whitesmoke; margin-bottom: 1%;">
 							<h5>Task 1</h5>
-							<p class="taskText" style="padding-left: 2%;" th:text="${variant.getTaskText1()}"></p>
+							<div style="padding-left: 2%;" th:utext="${variant.getTaskText1()}"></div>
 						</div>
 
 						<div class="container" style="border-bottom: 4px solid whitesmoke; margin-bottom: 1%;">
 							<h5>Task 2</h5>
-							<p class="taskText" style="padding-left: 2%;" th:text="${variant.getTaskText2()}"></p>
+							<div style="padding-left: 2%;" th:utext="${variant.getTaskText2()}"></div>
+
 							<div id="imgContainer1" class="container" style="margin-bottom: 2%;">
 								<div class="row text-center">
 									<div id="imageContainer1" class="col">
@@ -71,7 +72,8 @@
 
 						<div class="container" style="border-bottom: 4px solid whitesmoke; margin-bottom: 1%;">
 							<h5>Task 3</h5>
-							<p class="taskText" style="padding-left: 2%;" th:text="${variant.getTaskText3()}"></p>
+							<div style="padding-left: 2%;" th:utext="${variant.getTaskText3()}"></div>
+
 							<figure style="padding-left: 2%;">
 								<audio controls th:src="${variant.getAudioLink()}" preload="metadata">Your browser does not support the<code>audio</code> element.</audio>
 							</figure>
@@ -79,7 +81,8 @@
 
 						<div class="container" style="margin-bottom: 1%;">
 							<h5>Task 4</h5>
-							<p class="taskText" style="padding-left: 2%;" th:text="${variant.getTaskText4()}"></p>
+							<div style="padding-left: 2%;" th:utext="${variant.getTaskText4()}"></div>
+
 							<div id="imgContainer2" class="container" style="margin-bottom: 2%;">
 								<div class="row text-center">
 									<div id="imageContainer2" class="col">
@@ -140,19 +143,6 @@
 			document.getElementById("timeLine").innerHTML = time;
 		}
 		setInterval(getTime, 1000);
-
-		function contentToHtml(text) {
-			return text
-				.split('\n')
-				.map(paragraph => `<p class="text-break" style="padding-left: 2%;">${paragraph}</p>`)
-				.join('')
-		}
-
-		const elements = document.getElementsByClassName("taskText");
-		for (let elem of elements) {
-			let taskText = elem.innerHTML.toString().replaceAll("\\n", "\n");
-			elem.innerHTML = contentToHtml(taskText);
-		}
 
 		let amount = [[${variants.size()}]];
 

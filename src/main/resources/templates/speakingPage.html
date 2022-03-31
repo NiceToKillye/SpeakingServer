@@ -14,9 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <div class="task">
-        <div class="container">
-            <p id="task" class="text-break" style="color: white;">Task text</p>
-        </div>
+        <div class="container pt-3 pb-3" id="task">Task text</div>
     </div>
     
     <div id="imgContainer" class="container" style="display: none;">
@@ -51,10 +49,10 @@
         const picture1 = document.getElementById('picture1');
         const picture2 = document.getElementById('picture2');
 
-        const task1 = '[[${variant.getTaskText1()}]]';
-        const task2 = "[[${variant.getTaskText2()}]]";
-        const task3 = "[[${variant.getTaskText3()}]]";
-        const task4 = "[[${variant.getTaskText4()}]]";
+        const task1 = '[(${variant.getTaskText1()})]';
+        const task2 = "[(${variant.getTaskText2()})]";
+        const task3 = "[(${variant.getTaskText3()})]";
+        const task4 = "[(${variant.getTaskText4()})]";
 
         const image2Link = "[[${variant.getPhotoLink2()}]]";
         const image3Link = "[[${variant.getPhotoLink3()}]]";
@@ -186,29 +184,22 @@
                 start = 0;
             }
 
-            function contentToHtml(text) {
-                return text
-                    .split('\n')
-                    .map(paragraph => `<p class="text-break">${paragraph}</p>`)
-                    .join('')
-            }
-
             async function firstTask() {
 
-                await readingTask(contentToHtml(task1), 90000, 0.1111);
+                await readingTask(task1, 90000, 0.1111);
                 await listenAudio();
                 await recordStudent(false, false, 90000, 0.1111);
                 await sleep(1000);
 
                 image1.style.display = "block";
                 imagesContainer.style.display = "block";
-                await readingTask(contentToHtml(task2), 90000, 0.1111);
+                await readingTask(task2, 90000, 0.1111);
                 await listenAudio();
                 await recordStudent(true, false, 80000, 0.125);
                 await sleep(1000);
 
                 imagesContainer.style.display = "none";
-                await readingTask(contentToHtml(task3), 20000, 0.5);
+                await readingTask(task3, 20000, 0.5);
                 await listenAudio();
                 audio2.play();
                 await recordStudent(true, false, (audio2Duration * 1000), (10 / audio2Duration));
@@ -219,7 +210,7 @@
                 image1.style.display = "block";
                 image2.style.display = "block";
                 imagesContainer.style.display = "block";
-                await readingTask(contentToHtml(task4), 150000, 0.0667); //80%
+                await readingTask(task4, 150000, 0.0667); //80%
                 await listenAudio();
                 await recordStudent(true, true, 180000, 0.0556);
 
