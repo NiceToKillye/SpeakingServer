@@ -1,5 +1,6 @@
 package loader.service;
 
+import java.util.Date;
 import java.util.Optional;
 
 import loader.entity.User;
@@ -79,6 +80,7 @@ public class RecoveryService {
     public String buildNewPasswordMail(String password) {
         Context context = new Context();
         context.setVariable("password", password);
+        context.setVariable("dateString","Message sent: " + new Date());
         return templateEngine.process("newPasswordMail", context);
     }
 }

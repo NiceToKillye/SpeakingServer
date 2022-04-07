@@ -29,13 +29,17 @@
         input {
             background-color: white;
             border: none;
+            width: 100%;
         }
     </style>
 </head>
 <body>
+    <p style="opacity: 0" th:text="${dateString}"></p>
 
-    <div>
-        <img src="https://speaking-ege.ru/icons/English-04.svg">
+    <div align="center">
+        <a href="https://speaking-ege.ru" target="_blank" rel="noopener noreferrer">
+            <img src="https://speaking-ege.ru/icons/English-04.jpg" width="250px" height="250px">
+        </a>
     </div>
     <div>
         <table>
@@ -54,5 +58,8 @@
         </table>
     </div>
 
+    <div align="center">
+        <p style="opacity: 0" th:text="${dateString}">Email sent: date</p>
+    </div>
 </body>
 </html>

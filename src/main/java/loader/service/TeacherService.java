@@ -126,6 +126,7 @@ public class TeacherService {
         Context context = new Context();
         context.setVariable("login", login);
         context.setVariable("password", password);
+        context.setVariable("dateString","Message sent: " + new Date());
         return templateEngine.process("newExamMail", context);
     }
 
