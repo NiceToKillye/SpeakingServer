@@ -10,11 +10,16 @@ import org.passay.CharacterRule;
 import org.passay.PasswordGenerator;
 import org.passay.EnglishCharacterData;
 
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 @Service
 public class RecoveryService {
@@ -22,6 +27,8 @@ public class RecoveryService {
     private final JavaMailSender mailSender;
     private final UserRepository repository;
     private final PasswordEncoder encoder;
+    private final TemplateEngine templateEngine;
+
 
     private final PasswordGenerator passwordGenerator = new PasswordGenerator();
 
@@ -35,14 +42,16 @@ public class RecoveryService {
 
     public RecoveryService(JavaMailSender mailSender,
                            UserRepository repository,
-                           PasswordEncoder encoder)
+                           PasswordEncoder encoder,
+                           TemplateEngine templateEngine)
     {
         this.mailSender = mailSender;
         this.repository = repository;
         this.encoder = encoder;
+        this.templateEngine = templateEngine;
     }
 
-    public void sendPassword(String email) {
+    public void sendPassword(String email) throws MessagingException {
         Optional<User> userList = repository.findUserByEmail(email);
 
         if(userList.isEmpty()){
@@ -51,17 +60,25 @@ public class RecoveryService {
 
         String password = passwordGenerator.generatePassword(12, lowerCaseRule, upperCaseRule, digitRule);
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email);
-        message.setFrom("info@speaking-ege.ru");
+        MimeMessage message = mailSender.createMimeMessage();
+        String body = buildNewPasswordMail(password);
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(email);
+        helper.setFrom("info@speaking-ege.ru");
         message.setSubject("New password");
-        message.setText("Your new password: " + password);
+        helper.setText(body, true);
 
         User user = userList.get();
         user.setPassword(encoder.encode(password));
         repository.save(user);
 
         mailSender.send(message);
-        System.out.println(password);
+    }
+
+    public String buildNewPasswordMail(String password) {
+        Context context = new Context();
+        context.setVariable("password", password);
+        return templateEngine.process("newPasswordMail", context);
     }
 }

@@ -26,11 +26,16 @@ import org.passay.CharacterRule;
 import org.passay.PasswordGenerator;
 import org.passay.EnglishCharacterData;
 
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 @Service
 public class TeacherService {
@@ -41,6 +46,7 @@ public class TeacherService {
     VariantRepository variantRepository;
     AudioFileRepository audioFileRepository;
     private final JavaMailSender mailSender;
+    private final TemplateEngine templateEngine;
 
     private final PasswordEncoder passwordEncoder;
     private final PasswordGenerator passwordGenerator = new PasswordGenerator();
@@ -61,7 +67,8 @@ public class TeacherService {
                           PasswordEncoder passwordEncoder,
                           ConfigProperties configProperties,
                           VariantRepository variantRepository,
-                          AudioFileRepository audioFileRepository)
+                          AudioFileRepository audioFileRepository,
+                          TemplateEngine templateEngine)
     {
         this.mailSender = mailSender;
         this.examRepository = examRepository;
@@ -70,9 +77,10 @@ public class TeacherService {
         this.configProperties = configProperties;
         this.variantRepository = variantRepository;
         this.audioFileRepository = audioFileRepository;
+        this.templateEngine = templateEngine;
     }
 
-    public void createExam(String date, String username) throws ParseException, IOException {
+    public void createExam(String date, String username) throws ParseException, IOException, MessagingException {
         User teacher = userRepository.findUserByUsername(username).get();
 
         Date parsedDate = format.parse(date);
@@ -98,14 +106,27 @@ public class TeacherService {
         );
         examRepository.save(exam);
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(teacher.getEmail());
-        message.setFrom("info@speaking-ege.ru");
-        message.setSubject("Exam on " + date);
-        message.setText("Exam date: "     + date     + "\n" +
-                        "Exam login: "    + examName + "\n" +
-                        "Exam password: " + password);
-        mailSender.send(message);
+        MimeMessage message = mailSender.createMimeMessage();
+        String body = buildNewExamMail(examName, password);
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(teacher.getEmail());
+        helper.setFrom("info@speaking-ege.ru");
+        helper.setSubject("Exam on " + date);
+        helper.setText(body, true);
+        try {
+            mailSender.send(message);
+        }
+        catch (Exception exception){
+            deleteExam(exam.getId());
+        }
+    }
+
+    private String buildNewExamMail(String login, String password) {
+        Context context = new Context();
+        context.setVariable("login", login);
+        context.setVariable("password", password);
+        return templateEngine.process("newExamMail", context);
     }
 
     public void createVariant(VariantForm variantForm) throws IOException, VariantNameExists {

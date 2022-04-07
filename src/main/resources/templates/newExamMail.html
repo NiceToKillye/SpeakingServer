@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exam information</title>
+    <style>
+        html,body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        div {
+            width: 70vh;
+            margin: auto;
+        }
+        table {
+            border-collapse: collapse;
+            margin-left:auto;
+            margin-right:auto;
+            width: 70%;
+            height: 70%;
+        }
+        td {
+            border: 2px solid #0d6efd;
+            padding: 4px;
+        }
+        input {
+            background-color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <img src="https://speaking.ege.ru/icons/English-04.svg">
+    </div>
+    <div>
+        <table>
+            <tr>
+                <td><label>Website:</label></td>
+                <td><a href="https://speaking-ege.ru" target="_blank" rel="noopener noreferrer" style="text-decoration:none">https://speaking-ege.ru</a></td>
+            </tr>
+            <tr>
+                <td><label for="loginInput">Login:</label></td>
+                <td><input type="text" id="loginInput" th:value="*{login}" readonly disabled></td>
+            </tr>
+            <tr>
+                <td><label for="passwordInput">Password:</label></td>
+                <td><input type="text" id="passwordInput"  th:value="*{password}" readonly disabled></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import javax.mail.MessagingException;
+
 @Controller
 @RequestMapping("/teacher")
 public class TeacherController {
@@ -45,7 +47,7 @@ public class TeacherController {
     }
 
     @PostMapping("/newExam")
-    public ModelAndView newExam(@RequestBody String datePicker) throws ParseException, IOException {
+    public ModelAndView newExam(@RequestBody String datePicker) throws ParseException, IOException, MessagingException {
         teacherService.createExam(datePicker.substring(11), getUsername());
         return new ModelAndView("redirect:/teacher");
     }

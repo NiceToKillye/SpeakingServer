@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.mail.MessagingException;
+
 @Controller
 @RequestMapping("/recovery")
 public class RecoveryController {
@@ -15,7 +17,7 @@ public class RecoveryController {
     }
 
     @PostMapping
-    public String recovery(String email) {
+    public String recovery(String email) throws MessagingException {
         service.sendPassword(email);
         return "loginPage";
     }
