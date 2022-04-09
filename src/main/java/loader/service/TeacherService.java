@@ -136,6 +136,16 @@ public class TeacherService {
             throw new VariantNameExists();
         }
 
+        String editedTaskText1 = variantForm.getTaskText1().replaceAll("<span class=\"ql-cursor\">\uFEFF</span>", "");
+        String editedTaskText2 = variantForm.getTaskText2().replaceAll("<span class=\"ql-cursor\">\uFEFF</span>", "");
+        String editedTaskText3 = variantForm.getTaskText3().replaceAll("<span class=\"ql-cursor\">\uFEFF</span>", "");
+        String editedTaskText4 = variantForm.getTaskText4().replaceAll("<span class=\"ql-cursor\">\uFEFF</span>", "");
+
+        variantForm.setTaskText1(editedTaskText1);
+        variantForm.setTaskText2(editedTaskText2);
+        variantForm.setTaskText3(editedTaskText3);
+        variantForm.setTaskText4(editedTaskText4);
+
         String packageLink = configProperties.getVariantStorage() + "/" + (int) variantRepository.count();
         Files.createDirectories(Paths.get(packageLink));
 
