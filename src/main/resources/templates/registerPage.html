@@ -12,61 +12,70 @@
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <div class="register">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <h3 align="center">Registration</h3>
-                    <p align="center" th:if="${show}" th:text="${errorMessage}">Something went wrong.</p>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-                    <form class="form-floating" th:action="@{/registration}" name="registerForm" method="POST" onsubmit="return validateForm();">
-                        <div class="form-floating mb-3 mt-3">
-                            <input class="form-control" type="login" id="username" name="username" align="center" autocomplete="username" placeholder="Username"/>
-                            <label for="username">Login</label>
-                        </div>
-                        <div class="form-floating mb-3 mt-3">
-                            <input class="form-control" type="password" id="password" name="password" align="center" autocomplete="new-password" placeholder="Password"/>
-                            <label for="password">Password</label>
-                        </div>
-                        <div class="form-floating mb-3 mt-3">
-                            <input class="form-control" type="email" id="email" name="email" align="center" autocomplete="email" placeholder="Email"/>
-                            <label for="email">Email</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary mb-3">Register</button>
-                        <p><a href="/login">Sign in</a></p>
-                    </form>
+<div class="container" id="logoContainer">
+    <a href="https://speaking-ege.ru">
+        <img th:src="@{/icons/English-04.svg}">
+    </a>
+</div>
 
+<div class="container" id="mainContainer">
+    <div class="row">
+
+        <div class="col text-center">
+            <h3 align="center">Registration</h3>
+            <p align="center" th:if="${show}" th:text="${errorMessage}">Something went wrong.</p>
+
+            <form class="form-floating" th:action="@{/registration}" name="registerForm" method="POST" onsubmit="return validateForm();">
+                <div class="form-floating mb-3 mt-3">
+
+                    <input class="form-control" type="login" id="username" name="username" align="center" autocomplete="username" placeholder="Username"/>
+                    <label for="username">Login</label>
                 </div>
-            </div>
+
+                <div class="form-floating mb-3 mt-3">
+                    <input class="form-control" type="password" id="password" name="password" align="center" autocomplete="new-password" placeholder="Password"/>
+                    <label for="password">Password</label>
+                </div>
+
+                <div class="form-floating mb-3 mt-3">
+                    <input class="form-control" type="email" id="email" name="email" align="center" autocomplete="email" placeholder="Email"/>
+                    <label for="email">Email</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary mb-3">Register</button>
+                <p><a href="/login">Sign in</a></p>
+            </form>
+
         </div>
-
     </div>
+</div>
 
-    <script>
-        function validateForm() {
-            const usernameField = document.forms["registerForm"]["username"].value;
-            const passwordField = document.forms["registerForm"]["password"].value;
-            const emailField = document.forms["registerForm"]["email"].value;
+<script>
+    function validateForm() {
+        const usernameField = document.forms["registerForm"]["username"].value;
+        const passwordField = document.forms["registerForm"]["password"].value;
+        const emailField = document.forms["registerForm"]["email"].value;
 
-            if(usernameField == null || usernameField === ""){
-                alert("Please fill Username field");
-                return false;
-            }
-
-            if(passwordField == null || passwordField === ""){
-                alert("Please fill Password field");
-                return false;
-            }
-
-            if(emailField == null || emailField === ""){
-                alert("Please fill Email field");
-                return false;
-            }
-
-            return true;
+        if(usernameField == null || usernameField === ""){
+            alert("Please fill Username field");
+            return false;
         }
-    </script>
+
+        if(passwordField == null || passwordField === ""){
+            alert("Please fill Password field");
+            return false;
+        }
+
+        if(emailField == null || emailField === ""){
+            alert("Please fill Email field");
+            return false;
+        }
+
+        return true;
+    }
+</script>
 
 </body>
 </html>

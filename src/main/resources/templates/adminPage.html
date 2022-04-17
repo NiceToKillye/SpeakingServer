@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8" />
@@ -13,8 +13,7 @@
 
 <body>
 
-<div class="teachersRow">
-<div class="container">
+<div class="container" id="teachersContainer">
     <div class="row">
         <p align="center" th:if="${teachers.size() == 0}">There is no teachers yet</p>
         <form id="enableTeacher" name="enableTeacher" th:action="@{/admin}" onsubmit="return validateForm();" method="POST">
@@ -27,10 +26,16 @@
                 </div>
             </div>
         </form>
-        <button type="submit" class="btn btn-primary" form="enableTeacher" style="margin-bottom: 4%">Submit</button>
-        <button type="submit" class="btn btn-primary" onclick="location.href='/logout';">Logout</button>
     </div>
-</div>
+
+    <div class="row text-center">
+        <div class="col">
+            <button type="submit" class="btn btn-primary" form="enableTeacher">Submit</button>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary" onclick="location.href='/logout';">Logout</button>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -47,10 +52,8 @@
                 checked = false;
             }
         })
-
         return checked;
     }
-
 </script>
 
 </body>

@@ -1,14 +1,15 @@
-.login{
-    width: 400px;
+#mainContainer {
+    width: 70vh;
 
-    margin-top: 20%;
-    margin-bottom: 20%;
-    
     margin-left: auto;
     margin-right: auto;
-    padding-left: var(--bs-gutter-x,.75rem);
-    padding-right: var(--bs-gutter-x,.75rem);
 
     border-radius: 1.5em;
     box-shadow: 0 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+
+#logoContainer {
+    width: 70vh;
+    margin-left: auto;
+    margin-right: auto;
 }

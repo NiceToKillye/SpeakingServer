@@ -11,14 +11,13 @@
 	width: 100%;
 }
 
-.variants{
-    width: auto;
-
+#accordionFlushExample{
     margin-top: 5%;
     margin-bottom: 5%;
-    
-    margin-left: 15%;
-    margin-right: 15%;
+
+    margin-left: auto;
+    margin-right: auto;
+
     padding-left: var(--bs-gutter-x,.75rem);
     padding-right: var(--bs-gutter-x,.75rem);
 
@@ -30,6 +29,7 @@
 	padding-bottom: 20px;
 }
 
-.container {
-
+.navbar-collapse.collapsing li,
+.navbar-collapse.collapse.show li {
+    border-style: none !important;
 }

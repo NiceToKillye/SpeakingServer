@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"> <!-- xmlns:th="http://www.thymeleaf.org" -->
 
 <head>
     <meta charset="UTF-8" />
@@ -13,11 +13,12 @@
 
 <body>
 
-    <div class="error">
-        <h4 align="center" th:text="${errorCode}">Error Code</h4>
-        <h4 align="center" th:text="${errorMessage}">Error message</h4>
-        <p align="center"><a th:href="${previousPage}" style="font-size: 18px">Home</a></p>
-    </div>
+<div class="error text-center">
+    <h4 class="text-danger" th:text="${errorCode}">Error Code</h4>
+    <h4 th:text="${errorMessage}">Error message</h4>
+    <p><a th:href="${previousPage}" style="font-size: 18px">Home</a></p>
+    <button class="btn btn-outline-primary mb-3" th:attr="onclick=|location.href='${previousPage}'|">Go back</button>
+</div>
 
 </body>
 </html>
