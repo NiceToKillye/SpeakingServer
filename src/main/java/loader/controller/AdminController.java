@@ -1,13 +1,12 @@
 package loader.controller;
 
-import loader.custom.AdminForm;
 import loader.entity.User;
+import loader.entity.UserRole;
 import loader.repository.UserRepository;
 import loader.service.AdminService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 
@@ -27,14 +26,22 @@ public class AdminController {
 
     @GetMapping
     public String index(Model model){
-        ArrayList<User> teachers = userRepository.findAllByEnabled(false);
+        ArrayList<User> teachers = userRepository.findAllByUserRole(UserRole.TEACHER);
         model.addAttribute("teachers", teachers);
         return "adminPage";
     }
 
-    @PostMapping
-    public ModelAndView enableTeachers(AdminForm adminForm){
-        adminService.enableTeachers(adminForm.getTeachersId());
-        return new ModelAndView("redirect:/admin");
+    @ResponseBody
+    @PostMapping("/enable")
+    public String enableTeacher(long teacherId){
+        adminService.enableTeacher(teacherId);
+        return "success";
+    }
+
+    @ResponseBody
+    @PostMapping("/delete")
+    public String deleteTeacher(long teacherId){
+        adminService.deleteTeacher(teacherId);
+        return "success";
     }
 }

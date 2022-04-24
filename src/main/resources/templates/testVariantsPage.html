@@ -139,16 +139,6 @@
 	</div>
 
 	<script>
-		let date = new Date();
-		let time;
-
-		function getTime() {
-			date = new Date();
-			time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-			document.getElementById("timeLine").innerHTML = time;
-		}
-		setInterval(getTime, 1000);
-
 		let amount = [[${variants.size()}]];
 
 		function validateForm(){

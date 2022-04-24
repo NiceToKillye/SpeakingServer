@@ -190,8 +190,7 @@ public class TeacherService {
         Exam exam = examOptional.get();
         String path = exam.getPackageLink();
 
-        Optional<List<AudioFile>> optionalAudioFiles = audioFileRepository.findAllByExam(exam);
-        optionalAudioFiles.ifPresent(audioFiles -> audioFileRepository.deleteAll(audioFiles));
+        audioFileRepository.deleteAll(exam.getAudioFiles());
 
         FileSystemUtils.deleteRecursively(Paths.get(path));
         examRepository.deleteById(examId);

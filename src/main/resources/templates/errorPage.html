@@ -16,8 +16,7 @@
 <div class="error text-center">
     <h4 class="text-danger" th:text="${errorCode}">Error Code</h4>
     <h4 th:text="${errorMessage}">Error message</h4>
-    <p><a th:href="${previousPage}" style="font-size: 18px">Home</a></p>
-    <button class="btn btn-outline-primary mb-3" th:attr="onclick=|location.href='${previousPage}'|">Go back</button>
+    <button class="btn btn-outline-primary mb-3 mt-3" th:attr="onclick=|location.href='${previousPage}'|">Go back</button>
 </div>
 
 </body>
