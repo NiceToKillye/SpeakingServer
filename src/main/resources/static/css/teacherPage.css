@@ -50,7 +50,7 @@ table {
     border: 2px solid #0d6efd;
     margin: 2% auto;
 
-    width: 70vh;
+    width: 50vw;
 }
 
 td {
@@ -59,5 +59,5 @@ td {
 }
 
 td button {
-    width: 20vh;
+    width: 10vw;
 }

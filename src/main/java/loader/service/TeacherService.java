@@ -1,5 +1,6 @@
 package loader.service;
 
+import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,10 @@ import org.passay.CharacterRule;
 import org.passay.PasswordGenerator;
 import org.passay.EnglishCharacterData;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
@@ -80,16 +85,16 @@ public class TeacherService {
         this.templateEngine = templateEngine;
     }
 
-    public void createExam(String date, String username) throws ParseException, IOException, MessagingException {
+    public void createExam(String date, String username, String examTheme) throws ParseException, IOException, MessagingException {
         User teacher = userRepository.findUserByUsername(username).get();
 
         Date parsedDate = format.parse(date);
-        String examName = teacher.getUsername() + "_" + format.format(parsedDate);
+        String examName = teacher.getUsername() + "_" + examTheme;
         String password = passwordGenerator.generatePassword(12, lowerCaseRule, upperCaseRule, digitRule);
 
         int counter = 1;
         while(examRepository.findExamByExamName(examName).isPresent()){
-            examName = teacher.getUsername() + "_" + format.format(parsedDate) + "_" + counter;
+            examName = teacher.getUsername() + "_" + examTheme + "_" + counter;
             counter++;
         }
 
@@ -194,5 +199,25 @@ public class TeacherService {
 
         FileSystemUtils.deleteRecursively(Paths.get(path));
         examRepository.deleteById(examId);
+    }
+
+    public ResponseEntity<ByteArrayResource> downloadAudio(String stringPath) throws IOException {
+
+        File file = new File(stringPath);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName());
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+
+        Path path = Paths.get(stringPath);
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(file.length())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
     }
 }

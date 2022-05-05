@@ -10,6 +10,8 @@ import loader.service.TeacherService;
 import loader.entity.User;
 import loader.custom.VariantForm;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -47,8 +49,8 @@ public class TeacherController {
     }
 
     @PostMapping("/newExam")
-    public ModelAndView newExam(@RequestBody String datePicker) throws ParseException, IOException, MessagingException {
-        teacherService.createExam(datePicker.substring(11), getUsername());
+    public ModelAndView newExam(@RequestParam String datePicker, @RequestParam String examName) throws ParseException, IOException, MessagingException {
+        teacherService.createExam(datePicker, getUsername(), examName);
         return new ModelAndView("redirect:/teacher");
     }
 
@@ -56,6 +58,11 @@ public class TeacherController {
     public ModelAndView deleteExam(Long examId) throws IOException {
         teacherService.deleteExam(examId);
         return new ModelAndView("redirect:/teacher");
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<ByteArrayResource> downloadAudio(String audioPath) throws IOException {
+        return teacherService.downloadAudio(audioPath);
     }
 
     private String getUsername(){

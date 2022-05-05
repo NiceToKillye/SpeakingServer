@@ -68,6 +68,12 @@
 								Play
 							</button>
 						</td>
+						<td>
+							<form th:action="@{/teacher/download}" method="GET">
+								<input type="hidden" th:value="${audio.getAudioPath()}" name="audioPath">
+								<button class="btn btn-primary" type="submit">Download</button>
+							</form>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -136,11 +142,15 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<p> To create new exam choose date and press create. Login and password you can find on your email.</p>
+				<p> To create new exam choose date and name then press create. Login and password you can find on your email.</p>
 
 				<div class="container">
 					<div class="row text-center">
 						<form id="newExam" modelAttribute="newExam" th:action="@{/teacher/newExam}" method="POST">
+							<div class="form-floating mb-3">
+								<input class="form-control" type="text" id="newExamName" name="examName" placeholder="Exam name">
+								<label for="newExamName">Exam name</label>
+							</div>
 							<input type="date" id="datePicker" name="datePicker" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
 						</form>
 					</div>
