@@ -173,17 +173,21 @@
 				<h5 class="modal-title" id="staticBackdropLabel2">Delete exam</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div class="modal-body">
-				<p>Choose exam which you want to delete</p>
+			<div class="modal-body text-center">
+				<p>Select exams to delete</p>
 
 				<form id="deleteExam" name="deleteExam" th:action="@{/teacher/deleteExam}" method="POST">
 					<div class="container">
-						<div class="row">
-							<div th:each="exam : ${exams}" class="form-check col-auto pt-3 pb-3">
-								<input class="form-check-input" type="radio" th:id="${exam.getId()}" th:value="${exam.getId()}" name="examId">
-								<label th:text="${exam.getExamName()}" class="form-check-label" th:for="${exam.getId()}">Number</label>
-							</div>
-						</div>
+
+						<table>
+							<tr th:each="exam : ${exams}">
+								<td th:text="${exam.getExamName()}"></td>
+								<td>
+									<input class="form-check-input" type="checkbox" th:id="${exam.getId()}" th:value="${exam.getId()}" name="examId">
+								</td>
+							</tr>
+						</table>
+
 					</div>
 				</form>
 

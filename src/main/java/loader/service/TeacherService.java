@@ -92,10 +92,9 @@ public class TeacherService {
         String examName = teacher.getUsername() + "_" + examTheme;
         String password = passwordGenerator.generatePassword(12, lowerCaseRule, upperCaseRule, digitRule);
 
-        int counter = 1;
-        while(examRepository.findExamByExamName(examName).isPresent()){
-            examName = teacher.getUsername() + "_" + examTheme + "_" + counter;
-            counter++;
+        int numberOfExams = examRepository.countExamByExamNameStartingWith(examName);
+        if(numberOfExams > 0) {
+            examName = teacher.getUsername() + "_" + examTheme + "_" + numberOfExams;
         }
 
         String packageLink = configProperties.getExamStorage() + "/" + examName;
@@ -219,5 +218,24 @@ public class TeacherService {
                 .contentLength(file.length())
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(resource);
+    }
+
+    public void deleteExams(List<Long> examsId) {
+        examsId.forEach(examId -> {
+            Optional<Exam> examOptional = examRepository.findById(examId);
+            if(examOptional.isPresent()) {
+                Exam exam = examOptional.get();
+                String path = exam.getPackageLink();
+
+                audioFileRepository.deleteAll(exam.getAudioFiles());
+
+                try {
+                    FileSystemUtils.deleteRecursively(Paths.get(path));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                examRepository.deleteById(examId);
+            }
+        });
     }
 }

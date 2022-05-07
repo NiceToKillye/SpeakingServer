@@ -61,3 +61,13 @@ td {
 td button {
     width: 10vw;
 }
+
+#deleteExam table {
+    border: 2px solid #0d6efd;
+
+    width: 70%;
+}
+
+#deleteExam td{
+    border: 2px solid #0d6efd;
+}

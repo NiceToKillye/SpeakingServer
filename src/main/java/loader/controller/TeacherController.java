@@ -2,6 +2,7 @@ package loader.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 
 import loader.exception.VariantNameExists;
 import loader.service.UserService;
@@ -55,8 +56,8 @@ public class TeacherController {
     }
 
     @PostMapping("/deleteExam")
-    public ModelAndView deleteExam(Long examId) throws IOException {
-        teacherService.deleteExam(examId);
+    public ModelAndView deleteExam(@RequestParam(value = "examId") List<Long> examsId) {
+        teacherService.deleteExams(examsId);
         return new ModelAndView("redirect:/teacher");
     }
 
