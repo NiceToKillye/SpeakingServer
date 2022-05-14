@@ -174,9 +174,10 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body text-center">
-				<p>Select exams to delete</p>
+				<p th:if="${exams.size() != 0}">Select exams to delete</p>
+				<p th:if="${exams.size() == 0}">There is no exams yet</p>
 
-				<form id="deleteExam" name="deleteExam" th:action="@{/teacher/deleteExam}" method="POST">
+				<form id="deleteExam" name="deleteExam" th:action="@{/teacher/deleteExam}" method="POST" onsubmit="return validateDeleteExam();">
 					<div class="container">
 
 						<table>
@@ -353,6 +354,23 @@
 		document.forms["newVariantForm"]["taskText4"].value = document.getElementById("taskText4Container").querySelector(".ql-editor").innerHTML;
 
 		return true;
+	}
+
+	function validateDeleteExam(){
+		let checked = false;
+		let exams = document.getElementsByName("examId");
+
+		if(exams.length === 0){
+			return false;
+		}
+
+		exams.forEach(exam => {
+			if (exam.checked === true){
+				checked = true;
+			}
+		})
+
+		return checked;
 	}
 </script>
 </body>

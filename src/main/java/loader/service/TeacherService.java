@@ -182,22 +182,23 @@ public class TeacherService {
         variantRepository.save(variant);
     }
 
-    public void deleteExam(Long examId) throws IOException {
-        if (examId == null){
-            throw new NullPointerException("examId is null");
-        }
-
+    public void deleteExam(Long examId) {
         Optional<Exam> examOptional = examRepository.findById(examId);
-        if(examOptional.isEmpty()) {
-            throw new NullPointerException("Exam with this id = " + examId + " does not exist");
+
+        if(examOptional.isPresent()){
+            Exam exam = examOptional.get();
+            String path = exam.getPackageLink();
+
+            audioFileRepository.deleteAll(exam.getAudioFiles());
+
+            try {
+                FileSystemUtils.deleteRecursively(Paths.get(path));
+            }
+            catch (IOException exception) {
+                exception.printStackTrace();
+            }
+            examRepository.deleteById(examId);
         }
-        Exam exam = examOptional.get();
-        String path = exam.getPackageLink();
-
-        audioFileRepository.deleteAll(exam.getAudioFiles());
-
-        FileSystemUtils.deleteRecursively(Paths.get(path));
-        examRepository.deleteById(examId);
     }
 
     public ResponseEntity<ByteArrayResource> downloadAudio(String stringPath) throws IOException {
@@ -221,21 +222,6 @@ public class TeacherService {
     }
 
     public void deleteExams(List<Long> examsId) {
-        examsId.forEach(examId -> {
-            Optional<Exam> examOptional = examRepository.findById(examId);
-            if(examOptional.isPresent()) {
-                Exam exam = examOptional.get();
-                String path = exam.getPackageLink();
-
-                audioFileRepository.deleteAll(exam.getAudioFiles());
-
-                try {
-                    FileSystemUtils.deleteRecursively(Paths.get(path));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                examRepository.deleteById(examId);
-            }
-        });
+        examsId.forEach(this::deleteExam);
     }
 }
