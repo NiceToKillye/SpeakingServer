@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 
 import loader.entity.Variant;
 import loader.repository.VariantRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 
@@ -20,7 +21,6 @@ public class VariantService {
     }
 
     public List<Variant> getAllVariants(){
-        variantRepository.findAll().forEach(System.out::println);
         return variantRepository.findAll();
     }
 
@@ -37,20 +37,25 @@ public class VariantService {
         }
     }
 
-    public void deleteVariant(Long variantId) throws IOException {
-        if (variantId == null){
-            throw new NullPointerException("variantId is null");
-        }
-
+    public void deleteVariant(Long variantId) {
         Optional<Variant> variantOptional = variantRepository.findById(variantId);
-        if(variantOptional.isEmpty()) {
-            throw new NullPointerException("Variant with this id = " + variantId + " does not exist");
+
+        if(variantOptional.isPresent()){
+
+            String path = variantOptional.get().getPhotoLink1();
+            path = path.substring(0, path.lastIndexOf("/"));
+
+            try {
+                FileSystemUtils.deleteRecursively(Paths.get(path));
+            }
+            catch (IOException exception) {
+                exception.printStackTrace();
+            }
+            variantRepository.deleteById(variantId);
         }
+    }
 
-        String path = variantOptional.get().getPhotoLink1();
-        path = path.substring(0, path.lastIndexOf("/"));
-        FileSystemUtils.deleteRecursively(Paths.get(path));
-
-        variantRepository.deleteById(variantId);
+    public void deleteVariants(List<Long> variantId){
+        variantId.forEach(this::deleteVariant);
     }
 }

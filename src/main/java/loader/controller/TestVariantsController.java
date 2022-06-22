@@ -3,8 +3,10 @@ package loader.controller;
 import loader.service.VariantService;
 import loader.repository.VariantRepository;
 
-import java.io.IOException;
+import java.util.List;
+
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.springframework.stereotype.Controller;
@@ -33,8 +35,8 @@ public class TestVariantsController {
     }
 
     @PostMapping
-    public ModelAndView deleteVariant(Long variantId) throws IOException {
-        variantService.deleteVariant(variantId);
+    public ModelAndView deleteVariant(@RequestParam(value = "variantId") List<Long> variantId) {
+        variantService.deleteVariants(variantId);
         return new ModelAndView("redirect:/testVariants");
     }
 

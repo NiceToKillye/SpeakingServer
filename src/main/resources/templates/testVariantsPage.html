@@ -114,17 +114,22 @@
 					<h5 class="modal-title" id="staticBackdropLabel1">Delete variant</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<p>Choose variant number which you want to delete</p>
+				<div class="modal-body text-center">
+					<p th:if="${variants.size() != 0}">Select variants to delete</p>
+					<p th:if="${variants.size() == 0}">There is no variants yet</p>
 
 			        <form id="deleteVariant" name="deleteVariant" th:action="@{/testVariants}" method="POST" onsubmit="return validateForm();">
 			            <div class="container">
-			                <div class="row">
-			                    <div th:each="variant : ${variants}" class="form-check col-auto pt-3 pb-3">
-			                        <input class="form-check-input" type="radio" th:id="${variant.getId()}" th:value="${variant.getId()}" name="variantId">
-			                        <label th:text="${variant.getVariantName()}" class="form-check-label" th:for="${variant.getId()}">Number</label>
-			                    </div>
-			                </div>
+
+							<table>
+								<tr th:each="variant : ${variants}">
+									<td th:text="${variant.getVariantName()}"></td>
+									<td>
+										<input class="form-check-input" type="checkbox" th:id="${variant.getId()}" th:value="${variant.getId()}" name="variantId">
+									</td>
+								</tr>
+							</table>
+
 			            </div>
 			        </form>
 					
