@@ -1,5 +1,15 @@
+@media only screen and (max-width: 40em) {
+    #mainContainer {
+        width: 90vw !important;
+    }
+
+    #logoContainer {
+        width: 90vw !important;
+    }
+}
+
 #mainContainer {
-    width: 70vh;
+    width: 40vw;
 
     margin-left: auto;
     margin-right: auto;
@@ -9,7 +19,8 @@
 }
 
 #logoContainer {
-    width: 70vh;
+    width: 30vw;
+
     margin-left: auto;
     margin-right: auto;
 }

@@ -22,25 +22,26 @@
 
 <div class="container" id="mainContainer">
     <div class="row">
-
         <div class="col text-center">
-            <h3 align="center">Registration</h3>
-            <p align="center" th:if="${show}" th:text="${errorMessage}">Something went wrong.</p>
+
+            <div th:if="${show}" style="padding-top: 3%">
+                <h6 class="text-danger text-break" th:text="${errorMessage}">Something went wrong.</h6>
+            </div>
 
             <form class="form-floating" th:action="@{/registration}" name="registerForm" method="POST" onsubmit="return validateForm();">
-                <div class="form-floating mb-3 mt-3">
 
-                    <input class="form-control" type="login" id="username" name="username" align="center" autocomplete="username" placeholder="Username"/>
+                <div class="form-floating mb-3 mt-3">
+                    <input class="form-control" type="login" id="username" name="username" autocomplete="username" placeholder="Login"/>
                     <label for="username">Login</label>
                 </div>
 
                 <div class="form-floating mb-3 mt-3">
-                    <input class="form-control" type="password" id="password" name="password" align="center" autocomplete="new-password" placeholder="Password"/>
+                    <input class="form-control" type="password" id="password" name="password" autocomplete="new-password" placeholder="Password"/>
                     <label for="password">Password</label>
                 </div>
 
                 <div class="form-floating mb-3 mt-3">
-                    <input class="form-control" type="email" id="email" name="email" align="center" autocomplete="email" placeholder="Email"/>
+                    <input class="form-control" type="email" id="email" name="email" autocomplete="email" placeholder="Email"/>
                     <label for="email">Email</label>
                 </div>
 

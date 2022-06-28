@@ -1,5 +1,28 @@
+@media only screen and (max-width: 40em) {
+
+    #teachersContainer{
+        margin-top: 5vh !important;
+    }
+
+    td, th {
+        display: block;
+    }
+
+    .head {
+        display: none;
+    }
+
+    .text:before {
+        content: attr(data-th);
+        font-weight: bold;
+        display: inline-block;
+        padding-right: inherit;
+    }
+}
+
 #teachersContainer {
     width: 90vw;
+    max-width: 100%;
 
     margin-top: 25vh;
 

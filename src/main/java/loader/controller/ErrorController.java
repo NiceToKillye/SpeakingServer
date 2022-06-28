@@ -44,7 +44,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
 
         model.addAttribute("previousPage", page);
         model.addAttribute("errorMessage", message);
-        model.addAttribute("errorCode", status.toString());
+        model.addAttribute("errorCode", status == null ? "500" : status.toString());
 
         return "errorPage";
     }

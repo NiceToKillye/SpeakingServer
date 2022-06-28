@@ -14,9 +14,10 @@
 <body>
 
 <div class="container" id="teachersContainer">
+    <div class="table-responsive">
     <table class="table table-bordered border-primary" id="teachersTable">
 
-        <tr>
+        <tr class="head">
             <th scope="col">Id</th>
             <th scope="col">Username</th>
             <th scope="col">Email</th>
@@ -25,10 +26,10 @@
         </tr>
 
         <tr th:each="teacher : ${teachers}">
-            <td th:text="${teacher.getId()}"></td>
-            <td th:text="${teacher.getUsername()}"></td>
-            <td th:text="${teacher.getEmail()}"></td>
-            <td th:text="${teacher.isEnabled()}"></td>
+            <td class="text" data-th="Id:" th:text="${teacher.getId()}"></td>
+            <td class="text" data-th="Username:" th:text="${teacher.getUsername()}"></td>
+            <td class="text" data-th="Email:" th:text="${teacher.getEmail()}"></td>
+            <td class="text" data-th="Enabled:" th:text="${teacher.isEnabled()}"></td>
             <td>
                 <button type="button" class="btn btn-primary" th:disabled="${teacher.isEnabled()}" th:attr="onclick=|enableTeacher('${teacher.getId()}')|">Enable</button>
                 <button type="button" class="btn btn-danger" th:attr="onclick=|deleteTeacher('${teacher.getId()}')|">Delete</button>
@@ -36,6 +37,7 @@
         </tr>
 
     </table>
+    </div>
 
     <div class="row text-center">
         <div class="col">

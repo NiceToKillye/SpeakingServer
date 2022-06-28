@@ -52,7 +52,7 @@
 
 <div class="container text-center">
 	<div class="accordion accordion-flush" id="accordionFlushExample" style="padding: 10px;">
-		<p align="center" th:if="${exams.size() == 0}">There is no exams yet</p>
+		<p align="center" th:if="${exams.size() == 0}">There are no exams yet</p>
 
 		<div class="accordion-item" th:each="exam : ${exams}">
 			<h1 class="accordion-header" th:id="${'heading_'+ exam.getId()}">
@@ -60,9 +60,12 @@
 			</h1>
 
 			<div th:id="${'flush_'+ exam.getId()}" class="accordion-collapse collapse text-center" th:aria-labelledby="${'heading_'+ exam.getId()}" data-bs-parent="#accordionFlushExample">
+				<p th:if="${exam.getAudioFiles().size() == 0}" style="padding-top: 3%">There are no audios yet.</p>
 				<table>
 					<tr th:each="audio : ${exam.getAudioFiles()}">
-						<td th:text="${audio.getAudioName()}">...</td>
+						<td>
+							<p class="text-break" th:text="${audio.getAudioName()}"></p>
+						</td>
 						<td>
 							<button class="btn btn-primary" th:id="${audio.getAudioName() + '_' + exam.getId()}" th:attr="onclick=|loadAudio('${audio.getAudioPath()}', '${audio.getAudioName() + '_' + exam.getId()}')|">
 								Play
@@ -81,8 +84,15 @@
 	</div>
 </div>
 
+<footer>
+	<div class="container-fluid text-center">
+		<div id="waveform" class="mb-3"></div>
+		<button class="btn btn-primary btn-lg" onclick="wavesurfer.playPause()">Play/Stop</button>
+	</div>
+</footer>
+
 <div class="modal fade" id="newVariantModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="staticBackdropLabel">Create new variant</h5>
@@ -200,12 +210,6 @@
 
 		</div>
 	</div>
-</div>
-
-<div class="container-fluid text-center">
-	<div id="waveform" class="mb-3">
-	</div>
-	<button class="btn btn-primary btn-lg" onclick="wavesurfer.playPause()">Play/Stop</button>
 </div>
 
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>

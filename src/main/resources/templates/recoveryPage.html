@@ -23,9 +23,11 @@
 <div class="container" id="mainContainer">
     <div class="row">
         <div class="col text-center">
-            <div th:if="${show}" th:text="${errorMessage}" class="alert alert-error">
-                Wrong email.
+
+            <div th:if="${show}">
+                <h6 class="text-danger text-break" th:text="${errorMessage}" style="padding-top: 3%">Wrong email.</h6>
             </div>
+
             <form class="form-floating" th:action="@{/recovery}" method="POST">
                 <div class="form-floating mb-3 mt-3">
                     <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
@@ -34,6 +36,7 @@
                 <button type="submit" class="btn btn-primary mb-3">Recover</button>
                 <p><a href="/login">Sign in</a></p>
             </form>
+
         </div>
     </div>
 </div>

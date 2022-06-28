@@ -1,5 +1,11 @@
+@media only screen and (max-width: 40em) {
+    .error {
+        width: 90vw !important;
+    }
+}
+
 .error{
-    width: 70vh;
+    width: 50vw;
 
     margin-top: 20%;
 
