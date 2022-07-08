@@ -2,13 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speaking-ege</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shorthandcss@1.1.1/dist/shorthand.min.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:200,300,400,500,600,700,800,900&display=swap" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/indexPage.css}">
     <link rel="icon" th:href="@{/icons/English-02.svg}">
+    <title>Speaking-ege</title>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CTXXSE3XJ2"></script>
     <script>
@@ -20,23 +22,73 @@
     </script>
 </head>
 
-<body class="bg-black muli">
+<body class="bg-white">
 
-    <nav class="w-100pc md-px-10 py-5 bg-black">
-        <div id="nav-items" class="flex sm-w-100pc flex-column md-flex md-flex-row md-justify-end items-center">
-            <a href="/login" class="button bg-white black fw-600 no-underline mx-5 mb-5">Sign in</a>
-            <a href="/registration" class="button bg-white black fw-600 no-underline mx-5 mb-5">Register</a>
-            <a href="https://github.com/NiceToKillye" class="button bg-white black fw-600 no-underline mx-5 mb-5">Github</a>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img th:src="@{/icons/English-03.svg}" width="50" height="50" class="d-inline-block align-text-center">
+                Speaking-ege
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="btn btn-light" href="/login">SIGN IN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-light" href="/registration">REGISTER</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-light" href="https://github.com/NiceToKillye">GITHUB</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <section class="p-10 md-py-10">
-        <div class="w-100pc md-w-70pc mx-auto py-10">
-            <h2 class="white fs-l2 md-fs-xl1 fw-900 lh-2">
-                This is an online application for conducting the oral part of the exam in English </h2>
-        </div>
-    </section>
+    <div id="mainContainer">
 
+        <div class="container" id="photoContainer">
+            <div class="row text-center">
+                <div class="col" style="display: flex">
+                    <div class="container blue-text-box" style="margin: auto">
+                        <h2 style="padding: 5%"> This is an online application for conducting the oral part of the exam in English </h2>
+                    </div>
+                </div>
+                <div class="col">
+                    <img th:src="@{/icons/computer-man.webp}">
+                </div>
+            </div>
+        </div>
+
+        <div class="container videoContainer p-3" id="videoContainer1">
+            <h2>Video below demonstrates all available functions for teacher</h2>
+            <div class="container video">
+                <iframe src="https://www.youtube.com/embed/1F_I4k8l2gY" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="container videoContainer p-3" id="videoContainer2">
+            <h2>This one represents example of exam taken by student</h2>
+            <div class="container video">
+                <iframe src="https://www.youtube.com/embed/viyht4b63Zg" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="#videoContainer1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+        </svg>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 
 </html>
