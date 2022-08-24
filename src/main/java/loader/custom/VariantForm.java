@@ -1,5 +1,6 @@
 package loader.custom;
 
+import loader.entity.Language;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class VariantForm {
     private String taskText3;
     private String taskText4;
     private String variantName;
+    private Language variantLanguage;
     private MultipartFile taskFile2;
     private MultipartFile taskFile3;
     private MultipartFile[] taskFiles4;

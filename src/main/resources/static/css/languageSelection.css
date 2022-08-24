@@ -1,0 +1,59 @@
+@media only screen and (max-width: 40em) {
+
+    .container-fluid.text-center {
+        position: sticky !important;
+    }
+
+    .container a {
+        padding-bottom: 5px;
+    }
+
+    .navbar-nav {
+        margin-top: 2%;
+        flex-direction: row;
+    }
+
+    li {
+        margin-bottom: 3%;
+        margin-left: auto !important;
+        margin-right: auto;
+    }
+
+    #languageContainer a{
+        margin-bottom: 5px;
+    }
+
+    #newVariantContainer {
+        width: 90vw !important;
+    }
+
+}
+
+#languageContainer {
+    margin-top: 40px;
+}
+
+#newVariantContainer {
+    width: 70vw;
+
+    margin: 40px auto;
+
+    border-radius: 1.5em;
+    box-shadow: 0 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+
+#newVariantFormContainer {
+    padding-top: 20px;
+}
+
+.form-floating {
+    padding-bottom: 20px;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+li {
+    margin-left: 10px;
+}

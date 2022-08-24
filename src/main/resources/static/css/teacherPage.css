@@ -12,19 +12,27 @@
         position: sticky !important;
     }
 
+    .navbar-nav {
+        margin-top: 2%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    li {
+        margin-bottom: 3%;
+        margin-left: auto !important;
+        margin-right: auto;
+
+        width: 100px;
+    }
 }
 
-.collapse a:after {
-    display: block;
-    content: "";
-    height: 3px;
-    width: 0;
-    background-color: white;
-    transition: width 0.4s ease-in-out;
+.navbar-nav {
+    margin-left: auto;
 }
 
-.collapse a:hover:after {
-    width: 100%;
+li {
+    margin-left: 10px;
 }
 
 #accordionFlushExample {
@@ -34,11 +42,6 @@
 
     border-radius: 0.7em;
     box-shadow: 0 11px 35px 2px rgba(0, 0, 0, 0.14);
-}
-
-.navbar-collapse.collapsing li,
-.navbar-collapse.collapse.show li {
-    border-style: none !important;
 }
 
 .form-floating {

@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
-import loader.exception.VariantNameExists;
 import loader.service.UserService;
 import loader.service.TeacherService;
 
 import loader.entity.User;
-import loader.custom.VariantForm;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
@@ -41,12 +39,6 @@ public class TeacherController {
         User teacher = userService.getUserByUsername(getUsername());
         model.addAttribute("exams", teacher.getExams());
         return "teacherPage";
-    }
-
-    @PostMapping("/newVariant")
-    public ModelAndView newVariant(@ModelAttribute VariantForm variantForm) throws IOException, VariantNameExists {
-        teacherService.createVariant(variantForm);
-        return new ModelAndView("redirect:/teacher");
     }
 
     @PostMapping("/newExam")

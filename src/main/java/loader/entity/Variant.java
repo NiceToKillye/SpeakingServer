@@ -30,6 +30,19 @@ public class Variant {
     private String variantName;
 
     @Column(
+            name = "variantOwner",
+            nullable = false
+    )
+    private long variantOwner;
+
+    @Enumerated(EnumType.STRING)
+    @Column(
+            name = "variantLanguage",
+            nullable = false
+    )
+    private Language variantLanguage;
+
+    @Column(
             name = "taskText1",
             columnDefinition = "MEDIUMTEXT",
             nullable = false
@@ -89,7 +102,9 @@ public class Variant {
                    String photoLink1,
                    String photoLink2,
                    String photoLink3,
-                   String variantName)
+                   String variantName,
+                   long variantOwner,
+                   Language variantLanguage)
     {
         this.taskText1 = taskText1;
         this.taskText2 = taskText2;
@@ -100,6 +115,8 @@ public class Variant {
         this.photoLink2 = photoLink2;
         this.photoLink3 = photoLink3;
         this.variantName = variantName;
+        this.variantOwner = variantOwner;
+        this.variantLanguage = variantLanguage;
     }
 
     @Override
@@ -107,6 +124,8 @@ public class Variant {
         return "Variant{" +
                 "id=" + id +
                 ", variantName='" + variantName + '\'' +
+                ", variantOwner=" + variantOwner +
+                ", variantLanguage=" + variantLanguage +
                 ", taskText1='" + taskText1 + '\'' +
                 ", taskText2='" + taskText2 + '\'' +
                 ", taskText3='" + taskText3 + '\'' +

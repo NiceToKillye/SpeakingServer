@@ -14,9 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import loader.entity.*;
-import loader.custom.VariantForm;
 import loader.custom.ConfigProperties;
-import loader.exception.VariantNameExists;
 import loader.repository.AudioFileRepository;
 import loader.repository.ExamRepository;
 import loader.repository.UserRepository;
@@ -132,54 +130,6 @@ public class TeacherService {
         context.setVariable("password", password);
         context.setVariable("dateString","Message sent: " + new Date());
         return templateEngine.process("newExamMail", context);
-    }
-
-    public void createVariant(VariantForm variantForm) throws IOException, VariantNameExists {
-
-        if(variantRepository.existsByVariantName(variantForm.getVariantName())){
-            throw new VariantNameExists();
-        }
-
-        String editedTaskText1 = variantForm.getTaskText1().replaceAll("<span class=\"ql-cursor\">\uFEFF</span>", "");
-        String editedTaskText2 = variantForm.getTaskText2().replaceAll("<span class=\"ql-cursor\">\uFEFF</span>", "");
-        String editedTaskText3 = variantForm.getTaskText3().replaceAll("<span class=\"ql-cursor\">\uFEFF</span>", "");
-        String editedTaskText4 = variantForm.getTaskText4().replaceAll("<span class=\"ql-cursor\">\uFEFF</span>", "");
-
-        variantForm.setTaskText1(editedTaskText1);
-        variantForm.setTaskText2(editedTaskText2);
-        variantForm.setTaskText3(editedTaskText3);
-        variantForm.setTaskText4(editedTaskText4);
-
-        String packageLink = configProperties.getVariantStorage() + "/" + (int) variantRepository.count();
-        Files.createDirectories(Paths.get(packageLink));
-
-        String photo1Path = System.getProperty("user.dir") + "/" + packageLink + "/" + variantForm.getTaskFile2().getOriginalFilename();
-        String audioPath = System.getProperty("user.dir") + "/" + packageLink + "/" + variantForm.getTaskFile3().getOriginalFilename();
-        String photo2Path = System.getProperty("user.dir") + "/" + packageLink + "/" + variantForm.getTaskFiles4()[0].getOriginalFilename();
-        String photo3Path = System.getProperty("user.dir") + "/" + packageLink + "/" + variantForm.getTaskFiles4()[1].getOriginalFilename();
-
-        File photo1 = new File(photo1Path);
-        File audio = new File(audioPath);
-        File photo2 = new File(photo2Path);
-        File photo3 = new File(photo3Path);
-
-        variantForm.getTaskFile2().transferTo(photo1);
-        variantForm.getTaskFile3().transferTo(audio);
-        variantForm.getTaskFiles4()[0].transferTo(photo2);
-        variantForm.getTaskFiles4()[1].transferTo(photo3);
-
-        Variant variant = new Variant(
-                variantForm.getTaskText1(),
-                variantForm.getTaskText2(),
-                variantForm.getTaskText3(),
-                variantForm.getTaskText4(),
-                audioPath,
-                photo1Path,
-                photo2Path,
-                photo3Path,
-                variantForm.getVariantName());
-
-        variantRepository.save(variant);
     }
 
     public void deleteExam(Long examId) {
