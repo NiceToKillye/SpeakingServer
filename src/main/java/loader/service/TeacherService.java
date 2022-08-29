@@ -1,9 +1,7 @@
 package loader.service;
 
 import java.nio.file.Path;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,10 +13,7 @@ import java.nio.file.Paths;
 
 import loader.entity.*;
 import loader.custom.ConfigProperties;
-import loader.repository.AudioFileRepository;
-import loader.repository.ExamRepository;
-import loader.repository.UserRepository;
-import loader.repository.VariantRepository;
+import loader.repository.*;
 
 import org.passay.CharacterData;
 import org.passay.CharacterRule;
@@ -48,6 +43,7 @@ public class TeacherService {
     ConfigProperties configProperties;
     VariantRepository variantRepository;
     AudioFileRepository audioFileRepository;
+    ExamVariantsRepository examVariantsRepository;
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
 
@@ -71,7 +67,8 @@ public class TeacherService {
                           ConfigProperties configProperties,
                           VariantRepository variantRepository,
                           AudioFileRepository audioFileRepository,
-                          TemplateEngine templateEngine)
+                          TemplateEngine templateEngine,
+                          ExamVariantsRepository examVariantsRepository)
     {
         this.mailSender = mailSender;
         this.examRepository = examRepository;
@@ -81,9 +78,10 @@ public class TeacherService {
         this.variantRepository = variantRepository;
         this.audioFileRepository = audioFileRepository;
         this.templateEngine = templateEngine;
+        this.examVariantsRepository = examVariantsRepository;
     }
 
-    public void createExam(String date, String username, String examTheme) throws ParseException, IOException, MessagingException {
+    public void createExam(String date, String examTheme, List<Long> variantsId, String username) throws ParseException, IOException, MessagingException {
         User teacher = userRepository.findUserByUsername(username).get();
 
         Date parsedDate = format.parse(date);
@@ -107,6 +105,11 @@ public class TeacherService {
                 packageLink
         );
         examRepository.save(exam);
+
+        List<ExamVariants> examVariantsList = new ArrayList<>();
+        variantsId.forEach(variantId -> examVariantsList.add(new ExamVariants(variantId, exam.getId())));
+        examVariantsList.forEach(System.out::println);
+        examVariantsRepository.saveAll(examVariantsList);
 
         MimeMessage message = mailSender.createMimeMessage();
         String body = buildNewExamMail(examName, password);
@@ -139,7 +142,9 @@ public class TeacherService {
             Exam exam = examOptional.get();
             String path = exam.getPackageLink();
 
-            audioFileRepository.deleteAll(exam.getAudioFiles());
+            if(!exam.getAudioFiles().isEmpty()) {
+                audioFileRepository.deleteAll(exam.getAudioFiles());
+            }
 
             try {
                 FileSystemUtils.deleteRecursively(Paths.get(path));

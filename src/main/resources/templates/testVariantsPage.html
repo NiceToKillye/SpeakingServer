@@ -130,14 +130,14 @@
 					<h5 class="modal-title" id="staticBackdropLabel1">Delete variant</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body text-center">
-					<p th:if="${variants.size() != 0}">Select variants to delete</p>
-					<p th:if="${variants.size() == 0}">There is no variants yet</p>
+				<div class="modal-body">
+					<p th:if="${variants.size() != 0}" align="center">Select variants to delete</p>
+					<p th:if="${variants.size() == 0}" align="center">There is no variants yet</p>
 
 			        <form id="deleteVariant" name="deleteVariant" th:action="@{''}" method="POST" onsubmit="return validateForm();">
-			            <div class="container">
+						<div class="table-responsive" id="deleteVariantTable">
 
-							<table>
+							<table class="table table-bordered table-hover">
 								<tr th:each="variant : ${variants}">
 									<td th:text="${variant.getVariantName()}"></td>
 									<td>

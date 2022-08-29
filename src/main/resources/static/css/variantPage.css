@@ -3,8 +3,18 @@
         width: 90vw !important;
     }
 
-    #logoContainer {
-        width: 90vw !important;
+    .navbar-nav {
+        margin-top: 2%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    li {
+        margin-bottom: 3%;
+        margin-left: auto !important;
+        margin-right: auto;
+
+        width: 100px;
     }
 }
 
@@ -23,7 +33,10 @@
     padding-right: 3%;
 }
 
-#logoutContainer {
-    width: auto;
-    padding-bottom: 3%;
+.navbar-nav {
+    margin-left: auto;
+}
+
+li {
+    margin-left: 10px;
 }

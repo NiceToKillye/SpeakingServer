@@ -8,6 +8,10 @@
         width: auto !important;
     }
 
+    .table-responsive table {
+        width: 100% !important;
+    }
+
     .container-fluid.text-center {
         position: sticky !important;
     }
@@ -24,6 +28,10 @@
         margin-right: auto;
 
         width: 100px;
+    }
+
+    #deleteExamTable {
+        width: auto !important;
     }
 }
 
@@ -42,10 +50,6 @@ li {
 
     border-radius: 0.7em;
     box-shadow: 0 11px 35px 2px rgba(0, 0, 0, 0.14);
-}
-
-.form-floating {
-    padding-bottom: 20px;
 }
 
 body {
@@ -67,18 +71,6 @@ footer {
     box-shadow: 0 11px 35px 2px rgba(0, 0, 0, 0.14);
 }
 
-table {
-    border: 2px solid #0d6efd;
-    margin: 2% auto;
-
-    width: 70%;
-}
-
-td {
-    border: 2px solid #0d6efd;
-    padding: 4px;
-}
-
 td p {
     margin-top: 0;
     margin-bottom: 0;
@@ -88,11 +80,13 @@ table td button {
     width: 100%;
 }
 
-#deleteExam table {
-    width: 70%;
-    border: 2px solid #0d6efd;
+#carousel-inner.table-responsive {
+    height: 20vh;
 }
 
-#deleteExam td{
-    border: 2px solid #0d6efd;
+#deleteExamTable {
+    width: 70%;
+
+    margin-left: auto;
+    margin-right: auto;
 }

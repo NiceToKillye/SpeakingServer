@@ -78,6 +78,14 @@ public class Exam implements UserDetails {
     @OneToMany(mappedBy="exam")
     private Set<AudioFile> audioFiles;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "ExamVariants",
+            joinColumns = { @JoinColumn(name = "examId") },
+            inverseJoinColumns = { @JoinColumn(name = "variantId") }
+    )
+    private Set<Variant> variants;
+
     public Exam(
             User teacher,
             Date examDate,

@@ -79,25 +79,27 @@
 			</h1>
 
 			<div th:id="${'flush_'+ exam.getId()}" class="accordion-collapse collapse text-center" th:aria-labelledby="${'heading_'+ exam.getId()}" data-bs-parent="#accordionFlushExample">
-				<p th:if="${exam.getAudioFiles().size() == 0}" style="padding-top: 3%">There are no audios yet.</p>
-				<table>
-					<tr th:each="audio : ${exam.getAudioFiles()}">
-						<td>
-							<p class="text-break" th:text="${audio.getAudioName()}"></p>
-						</td>
-						<td>
-							<button class="btn btn-primary" th:id="${audio.getAudioName() + '_' + exam.getId()}" th:attr="onclick=|loadAudio('${audio.getAudioPath()}', '${audio.getAudioName() + '_' + exam.getId()}')|">
-								Play
-							</button>
-						</td>
-						<td>
-							<form th:action="@{/teacher/download}" method="GET">
-								<input type="hidden" th:value="${audio.getAudioPath()}" name="audioPath">
-								<button class="btn btn-primary" type="submit">Download</button>
-							</form>
-						</td>
-					</tr>
-				</table>
+				<div class="table-responsive">
+					<p th:if="${exam.getAudioFiles().size() == 0}" style="padding-top: 3%">There are no audios yet.</p>
+					<table class="table table-bordered table-hover">
+						<tr th:each="audio : ${exam.getAudioFiles()}">
+							<td>
+								<p class="text-break" th:text="${audio.getAudioName()}"></p>
+							</td>
+							<td>
+								<button class="btn btn-primary" th:id="${audio.getAudioName() + '_' + exam.getId()}" th:attr="onclick=|loadAudio('${audio.getAudioPath()}', '${audio.getAudioName() + '_' + exam.getId()}')|">
+									Play
+								</button>
+							</td>
+							<td>
+								<form th:action="@{/teacher/download}" method="GET">
+									<input type="hidden" th:value="${audio.getAudioPath()}" name="audioPath">
+									<button class="btn btn-primary" type="submit">Download</button>
+								</form>
+							</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -121,15 +123,78 @@
 				<p> To create new exam choose date and name then press create. Login and password you can find on your email.</p>
 
 				<div class="container">
-					<div class="row text-center">
-						<form id="newExam" modelAttribute="newExam" th:action="@{/teacher/newExam}" method="POST">
-							<div class="form-floating mb-3">
-								<input class="form-control" type="text" id="newExamName" name="examName" placeholder="Exam name">
+						<form id="newExam" modelAttribute="newExam" th:action="@{/teacher/newExam}" method="POST" onsubmit="return validateCreateExam();">
+							<div class="form-floating row mb-3">
+								<input class="form-control col me-1" type="text" id="newExamName" name="examName" placeholder="Exam name">
 								<label for="newExamName">Exam name</label>
+								<input class="col" type="date" id="datePicker" name="datePicker" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
 							</div>
-							<input type="date" id="datePicker" name="datePicker" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+
+							<div id="variantsCarousel" class="carousel slide" data-bs-interval="false" data-bs-ride="carousel">
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<div class="table-responsive">
+											<p th:if="${variantsEN.size() == 0}" style="text-align: center">There is no variants yet</p>
+											<table th:if="${variantsEN.size() != 0}" class="table table-bordered table-hover">
+												<tr th:each="variant : ${variantsEN}">
+													<td th:text="${variant.getVariantName()}"></td>
+													<td>
+														<input class="form-check-input" type="checkbox" th:id="${variant.getId()}" th:value="${variant.getId()}" name="variantId">
+													</td>
+												</tr>
+											</table>
+										</div>
+
+									</div>
+									<div class="carousel-item">
+										<div class="table-responsive">
+											<p th:if="${variantsDE.size() == 0}" style="text-align: center">There is no variants yet</p>
+											<table th:if="${variantsDE.size() != 0}" class="table table-bordered table-hover">
+												<tr th:each="variant : ${variantsDE}">
+													<td th:text="${variant.getVariantName()}"></td>
+													<td>
+														<input class="form-check-input" type="checkbox" th:id="${variant.getId()}" th:value="${variant.getId()}" name="variantId">
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="table-responsive">
+											<p th:if="${variantsFR.size() == 0}" style="text-align: center">There is no variants yet</p>
+											<table th:if="${variantsFR.size() != 0}" class="table table-bordered table-hover">
+												<tr th:each="variant : ${variantsFR}">
+													<td th:text="${variant.getVariantName()}"></td>
+													<td>
+														<input class="form-check-input" type="checkbox" th:id="${variant.getId()}" th:value="${variant.getId()}" name="variantId">
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="table-responsive">
+											<p th:if="${variantsES.size() == 0}" style="text-align: center">There is no variants yet</p>
+											<table th:if="${variantsES.size() != 0}" class="table table-bordered table-hover">
+												<tr th:each="variant : ${variantsES}">
+													<td th:text="${variant.getVariantName()}"></td>
+													<td>
+														<input class="form-check-input" type="checkbox" th:id="${variant.getId()}" th:value="${variant.getId()}" name="variantId">
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="text-center mt-3 mb-3">
+								<button type="button" class="btn btn-primary" data-bs-target="#variantsCarousel" data-bs-slide-to="0">English</button>
+								<button type="button" class="btn btn-primary" data-bs-target="#variantsCarousel" data-bs-slide-to="1">German</button>
+								<button type="button" class="btn btn-primary" data-bs-target="#variantsCarousel" data-bs-slide-to="2">French</button>
+								<button type="button" class="btn btn-primary" data-bs-target="#variantsCarousel" data-bs-slide-to="3">Spanish</button>
+							</div>
 						</form>
-					</div>
 				</div>
 
 			</div>
@@ -149,14 +214,14 @@
 				<h5 class="modal-title" id="staticBackdropLabel2">Delete exam</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div class="modal-body text-center">
-				<p th:if="${exams.size() != 0}">Select exams to delete</p>
-				<p th:if="${exams.size() == 0}">There is no exams yet</p>
+			<div class="modal-body">
+				<p th:if="${exams.size() != 0}" align="center">Select exams to delete</p>
+				<p th:if="${exams.size() == 0}" align="center">There is no exams yet</p>
 
 				<form id="deleteExam" name="deleteExam" th:action="@{/teacher/deleteExam}" method="POST" onsubmit="return validateDeleteExam();">
-					<div class="container">
+					<div class="table-responsive" id="deleteExamTable">
 
-						<table>
+						<table class="table table-bordered table-hover">
 							<tr th:each="exam : ${exams}">
 								<td th:text="${exam.getExamName()}"></td>
 								<td>
@@ -241,6 +306,31 @@
 
 		return checked;
 	}
+
+	function validateCreateExam(){
+
+		let checked = false;
+		let examName = document.forms["newExam"]["examName"].value;
+		let variants = document.getElementsByName("variantId");
+
+		if(examName == null || examName === "") {
+			return false;
+		}
+
+		if(variants.length === 0){
+			return false;
+		}
+
+		variants.forEach(variant => {
+			if (variant.checked === true){
+				checked = true;
+			}
+		})
+
+		return checked;
+	}
+
+
 </script>
 </body>
 
