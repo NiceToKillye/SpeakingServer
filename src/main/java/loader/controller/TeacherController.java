@@ -1,27 +1,30 @@
 package loader.controller;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.mail.MessagingException;
+
+import loader.entity.User;
 import loader.entity.Language;
-import loader.repository.VariantRepository;
+
 import loader.service.UserService;
 import loader.service.TeacherService;
 
-import loader.entity.User;
+import loader.repository.VariantRepository;
 
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.core.io.ByteArrayResource;
+
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
-
-import javax.mail.MessagingException;
 
 @Controller
 @RequestMapping("/teacher")

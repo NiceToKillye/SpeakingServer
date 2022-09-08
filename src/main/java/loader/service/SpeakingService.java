@@ -26,7 +26,9 @@ public class SpeakingService {
     ExamRepository examRepository;
     AudioFileRepository audioFileRepository;
 
-    public SpeakingService(ExamRepository examRepository, AudioFileRepository audioFileRepository) {
+    public SpeakingService(ExamRepository examRepository,
+                           AudioFileRepository audioFileRepository)
+    {
         this.examRepository = examRepository;
         this.audioFileRepository = audioFileRepository;
     }

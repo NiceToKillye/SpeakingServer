@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import loader.entity.User;
-import loader.repository.ExamRepository;
-import loader.repository.UserRepository;
-import loader.repository.AudioFileRepository;
+import loader.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 
@@ -16,15 +14,21 @@ public class AdminService {
 
     UserRepository userRepository;
     ExamRepository examRepository;
+    VariantRepository variantRepository;
     AudioFileRepository audioFileRepository;
+    ExamVariantsRepository examVariantsRepository;
 
     public AdminService(UserRepository userRepository,
                         ExamRepository examRepository,
-                        AudioFileRepository audioFileRepository)
+                        VariantRepository variantRepository,
+                        AudioFileRepository audioFileRepository,
+                        ExamVariantsRepository examVariantsRepository)
     {
         this.userRepository = userRepository;
         this.examRepository = examRepository;
+        this.variantRepository = variantRepository;
         this.audioFileRepository = audioFileRepository;
+        this.examVariantsRepository = examVariantsRepository;
     }
 
     public void enableTeacher(long teacherId){
@@ -38,7 +42,6 @@ public class AdminService {
     }
 
     public void deleteTeacher(long teacherId){
-
         Optional<User> optionalTeacher = userRepository.findById(teacherId);
 
         if(optionalTeacher.isPresent()){

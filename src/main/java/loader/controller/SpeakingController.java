@@ -1,7 +1,10 @@
 package loader.controller;
 
 import java.io.IOException;
+import java.util.Optional;
+
 import ws.schild.jave.EncoderException;
+import loader.repository.VariantRepository;
 
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -23,25 +26,27 @@ public class SpeakingController {
 
     VariantService variantService;
     SpeakingService speakingService;
+    VariantRepository variantRepository;
 
-    public SpeakingController(VariantService variantService, SpeakingService speakingService) {
+    public SpeakingController(VariantService variantService,
+                              SpeakingService speakingService,
+                              VariantRepository variantRepository)
+    {
         this.variantService = variantService;
         this.speakingService = speakingService;
+        this.variantRepository = variantRepository;
     }
 
     @GetMapping
     public ModelAndView index(Long variantId, Model model){
-        Variant variant;
-        try{
-            variant = variantService.getVariantById(variantId);
-        }
-        catch (NullPointerException exception){
+        Optional<Variant> variantOptional = variantRepository.findById(variantId);
+
+        if(variantOptional.isEmpty()){
             return new ModelAndView("redirect:/variant");
         }
-        model.addAttribute("variant", variant);
+        model.addAttribute("variant", variantOptional.get());
         return new ModelAndView("speakingPage");
     }
-
 
     @PostMapping
     @ResponseBody

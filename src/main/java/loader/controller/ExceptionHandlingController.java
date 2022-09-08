@@ -1,9 +1,9 @@
 package loader.controller;
 
+import loader.exception.VariantNameExists;
 import loader.exception.EmailWasTakenException;
 import loader.exception.LoginWasTakenException;
 
-import loader.exception.VariantNameExists;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
