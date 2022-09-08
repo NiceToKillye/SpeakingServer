@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -93,6 +95,14 @@ public class Variant {
             nullable = false
     )
     private String audioLink;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "ExamVariants",
+            joinColumns = { @JoinColumn(name = "variantId") },
+            inverseJoinColumns = { @JoinColumn(name = "examId") }
+    )
+    private Set<Exam> exams;
 
     public Variant(String taskText1,
                    String taskText2,

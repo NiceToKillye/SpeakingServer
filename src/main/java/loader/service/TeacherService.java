@@ -61,23 +61,23 @@ public class TeacherService {
 
 
     public TeacherService(JavaMailSender mailSender,
+                          TemplateEngine templateEngine,
                           ExamRepository examRepository,
                           UserRepository userRepository,
                           PasswordEncoder passwordEncoder,
                           ConfigProperties configProperties,
                           VariantRepository variantRepository,
                           AudioFileRepository audioFileRepository,
-                          TemplateEngine templateEngine,
                           ExamVariantsRepository examVariantsRepository)
     {
         this.mailSender = mailSender;
+        this.templateEngine = templateEngine;
         this.examRepository = examRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.configProperties = configProperties;
         this.variantRepository = variantRepository;
         this.audioFileRepository = audioFileRepository;
-        this.templateEngine = templateEngine;
         this.examVariantsRepository = examVariantsRepository;
     }
 
@@ -177,6 +177,23 @@ public class TeacherService {
     }
 
     public void deleteExams(List<Long> examsId) {
-        examsId.forEach(this::deleteExam);
+        List<Exam> exams = examRepository.findAllById(examsId);
+
+        exams.forEach(exam -> {
+            String path = exam.getPackageLink();
+
+            if(!exam.getAudioFiles().isEmpty()) {
+                audioFileRepository.deleteAll(exam.getAudioFiles());
+            }
+
+            try {
+                FileSystemUtils.deleteRecursively(Paths.get(path));
+            }
+            catch (IOException exception) {
+                exception.printStackTrace();
+            }
+
+        });
+        examRepository.deleteAll(exams);
     }
 }

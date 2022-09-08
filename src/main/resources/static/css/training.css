@@ -1,10 +1,7 @@
 @media only screen and (max-width: 40em) {
-    #mainContainer {
-        width: 90vw !important;
-    }
 
-    #logoContainer {
-        width: 90vw !important;
+    .container a {
+        padding-bottom: 5px;
     }
 
     .navbar-nav {
@@ -18,23 +15,11 @@
         margin-left: auto !important;
         margin-right: auto;
     }
-}
 
-#mainContainer {
-    width: 40vw;
+    #languageContainer a{
+        margin-bottom: 5px;
+    }
 
-    margin-left: auto;
-    margin-right: auto;
-
-    border-radius: 1.5em;
-    box-shadow: 0 11px 35px 2px rgba(0, 0, 0, 0.14);
-}
-
-#logoContainer {
-    width: 30vw;
-
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .navbar-nav {

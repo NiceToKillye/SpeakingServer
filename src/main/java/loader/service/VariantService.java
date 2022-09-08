@@ -1,18 +1,21 @@
 package loader.service;
 
-import java.io.File;
-import java.nio.file.Files;
 import java.util.List;
-import java.util.Optional;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import loader.custom.ConfigProperties;
 import loader.custom.VariantForm;
+import loader.custom.ConfigProperties;
+
 import loader.entity.Variant;
 import loader.exception.VariantNameExists;
+
 import loader.repository.VariantRepository;
+import loader.repository.ExamVariantsRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 
@@ -22,26 +25,11 @@ public class VariantService {
     ConfigProperties configProperties;
     VariantRepository variantRepository;
 
-    public VariantService(VariantRepository variantRepository, ConfigProperties configProperties){
+    public VariantService(ConfigProperties configProperties,
+                          VariantRepository variantRepository)
+    {
         this.configProperties = configProperties;
         this.variantRepository = variantRepository;
-    }
-
-    public List<Variant> getAllVariants(){
-        return variantRepository.findAll();
-    }
-
-    public Variant getVariantById(Long id){
-        if(id == null){
-            throw new NullPointerException("Id is null");
-        }
-        Optional<Variant> variant = variantRepository.findById(id);
-        if(variant.isPresent()){
-            return variant.get();
-        }
-        else{
-            throw new NullPointerException("Variant with this id = " + id + " does not exist");
-        }
     }
 
     public void createVariant(VariantForm variantForm, long userId) throws IOException, VariantNameExists {
@@ -84,12 +72,11 @@ public class VariantService {
         variantRepository.save(variant);
     }
 
-    public void deleteVariant(Long variantId) {
-        Optional<Variant> variantOptional = variantRepository.findById(variantId);
+    public void deleteVariants(List<Long> variantsId) {
+        List<Variant> variants = variantRepository.findAllById(variantsId);
 
-        if(variantOptional.isPresent()){
-
-            String path = variantOptional.get().getPhotoLink1();
+        variants.forEach(variant -> {
+            String path = variant.getPhotoLink1();
             path = path.substring(0, path.lastIndexOf("/"));
 
             try {
@@ -98,11 +85,14 @@ public class VariantService {
             catch (IOException exception) {
                 exception.printStackTrace();
             }
-            variantRepository.deleteById(variantId);
-        }
+        });
+
+        variantRepository.deleteAll(variants);
     }
 
-    public void deleteVariants(List<Long> variantId){
-        variantId.forEach(this::deleteVariant);
+    public void shareVariants(List<Long> variantsId){
+        List<Variant> variants = variantRepository.findAllById(variantsId);
+        variants.forEach(variant -> variant.setVariantOwner(0));
+        variantRepository.saveAll(variants);
     }
 }

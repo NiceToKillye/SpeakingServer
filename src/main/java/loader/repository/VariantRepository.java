@@ -9,6 +9,7 @@ import java.util.Set;
 
 public interface VariantRepository extends JpaRepository<Variant, Long> {
     Boolean existsByVariantName(String variantName);
-    Set<Variant> findAllByVariantOwnerInAndVariantLanguage(ArrayList<Long> variantOwner, Language variantLanguage);
+    Set<Variant> findAllByVariantOwner(long variantOwner);
     Set<Variant> findAllByVariantOwnerAndVariantLanguage(long variantOwner, Language variantLanguage);
+    Set<Variant> findAllByVariantOwnerInAndVariantLanguage(ArrayList<Long> variantOwner, Language variantLanguage);
 }

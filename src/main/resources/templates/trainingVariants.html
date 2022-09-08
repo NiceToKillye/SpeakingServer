@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/trainingVariants.css}">
+    <link rel="icon" th:href="@{/icons/English-02.svg}">
+    <title>Variants</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img th:src="@{/icons/English-03.svg}" width="50" height="50" class="d-inline-block align-text-center">
+                Speaking-ege
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="btn btn-light" aria-current="page" href="/training">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+                            </svg>
+                            Back
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-light" href="/login">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
+                                <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+                                <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+                            </svg>
+                            Sign in
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-light" href="/registration">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+                                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                            </svg>
+                            Register
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-light" href="https://github.com/NiceToKillye">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="variantContainer">
+        <div id="variantFormContainer">
+            <form name="variantForm" th:action="@{/training/recording}" onsubmit="return validateForm();" method="GET">
+                <div class="input-group pt-3">
+                    <input id="inputName" name="inputName" type="text" class="form-control" placeholder="Enter your surname" aria-label="Student surname" aria-describedby="button-addon2">
+                    <button id="usernameButton" class="btn btn-outline-secondary" type="submit">Enter</button>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <p align="center" th:if="${variants.size() == 0}" style="margin-top: 1rem">There is no variants yet</p>
+                        <div class="form-check col-auto pt-3 pb-3" th:each="variant : ${variants}">
+                            <input class="form-check-input" type="radio" th:id="${variant.getId()}" th:value="${variant.getId()}" name="variantId">
+                            <label class="form-check-label" th:text="${variant.getVariantName()}" th:for="${variant.getId()}">Number</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="accordion accordion-flush" id="accordionFlushExample" style="padding: 10px;">
+            <p align="center" th:if="${variants.size() == 0}" style="margin-top: 1rem">There is no variants yet</p>
+            <div class="accordion-item" th:each="variant : ${variants}">
+                <h1 class="accordion-header" th:id="${'heading_'+ variant.getId()}">
+                    <button th:text="${variant.getVariantName()}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#flush_'+ variant.getId()}" aria-expanded="false" th:aria-controls="${'flush_'+ variant.getId()}" style="">
+                        Variant name
+                    </button>
+                </h1>
+
+                <div th:id="${'flush_'+ variant.getId()}" class="accordion-collapse collapse" th:aria-labelledby="${'heading_'+ variant.getId()}" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body" style="border: 4px solid whitesmoke;">
+
+                        <div class="container" style="border-bottom: 4px solid whitesmoke; margin-bottom: 1%;">
+                            <h5>Task 1</h5>
+                            <div style="padding-left: 2%;" th:utext="${variant.getTaskText1()}"></div>
+                        </div>
+
+                        <div class="container" style="border-bottom: 4px solid whitesmoke; margin-bottom: 1%;">
+                            <h5>Task 2</h5>
+                            <div style="padding-left: 2%;" th:utext="${variant.getTaskText2()}"></div>
+
+                            <div id="imgContainer1" class="container" style="margin-bottom: 2%;">
+                                <div class="row text-center">
+                                    <div id="imageContainer1" class="col">
+                                        <img id="picture1" th:src="${variant.getPhotoLink1()}" class="img-fluid" alt="Picture 1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container" style="border-bottom: 4px solid whitesmoke; margin-bottom: 1%;">
+                            <h5>Task 3</h5>
+                            <div style="padding-left: 2%;" th:utext="${variant.getTaskText3()}"></div>
+
+                            <figure style="padding-left: 2%;">
+                                <audio controls th:src="${variant.getAudioLink()}" preload="metadata">Your browser does not support the<code>audio</code> element.</audio>
+                            </figure>
+                        </div>
+
+                        <div class="container" style="margin-bottom: 1%;">
+                            <h5>Task 4</h5>
+                            <div style="padding-left: 2%;" th:utext="${variant.getTaskText4()}"></div>
+
+                            <div id="imgContainer2" class="container" style="margin-bottom: 2%;">
+                                <div class="row text-center">
+                                    <div id="imageContainer2" class="col">
+                                        <img id="picture2" th:src="${variant.getPhotoLink2()}" class="img-fluid" alt="Picture 1">
+                                    </div>
+                                    <div id="imageContainer3" class="col">
+                                        <img id="picture3" th:src="${variant.getPhotoLink3()}" class="img-fluid" alt="Picture 2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="warningModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="warningModalLabel">Something went wrong!</h5>
+                </div>
+                <div class="modal-body">
+                    There are no available variants, or you didn't enter surname!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            let variants = document.getElementsByName("variantId");
+            let inputField = document.forms["variantForm"]["inputName"].value;
+            if(inputField == null || inputField === "" || variants.length === 0){
+                jQuery('#warningModal').modal('show');
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+</body>
+</html>

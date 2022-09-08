@@ -18,6 +18,20 @@
         display: inline-block;
         padding-right: inherit;
     }
+
+    .navbar-nav {
+        margin-top: 2%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    li {
+        margin-bottom: 3%;
+        margin-left: auto !important;
+        margin-right: auto;
+
+        width: 100px;
+    }
 }
 
 #teachersContainer {
@@ -48,4 +62,12 @@ table {
 
 .btn{
     box-shadow: none !important
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+li {
+    margin-left: 10px;
 }

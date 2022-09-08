@@ -22,17 +22,20 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final ConfigProperties properties;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ConfigProperties configProperties;
     private final UserDetailsService userDetailsService;
 
     public ApplicationSecurityConfig(
+            ConfigProperties properties,
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
             ConfigProperties configProperties,
             UserDetailsService userDetailsService)
     {
+        this.properties = properties;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.configProperties = configProperties;
@@ -41,11 +44,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String resourcesPath = System.getProperty("user.dir") + "/" + properties.getVariantStorage() + "/**";
         http
                 .csrf().disable()
                 //.requiresChannel(channel -> channel.anyRequest().requiresSecure())
                 .authorizeRequests()
-                .antMatchers("/", "/recovery", "/registration", "/css/*", "/icons/*").permitAll()
+                .antMatchers("/", "/recovery", "/registration", "/training/**" , "/css/*", "/icons/*", "/audio/*", resourcesPath).permitAll()
 
                 .antMatchers("/admin").hasRole(ADMIN.name())
                 .antMatchers("/teacher", "/testVariants").hasRole(TEACHER.name())

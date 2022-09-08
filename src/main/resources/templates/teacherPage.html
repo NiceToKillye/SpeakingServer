@@ -134,7 +134,7 @@
 								<div class="carousel-inner">
 									<div class="carousel-item active">
 										<div class="table-responsive">
-											<p th:if="${variantsEN.size() == 0}" style="text-align: center">There is no variants yet</p>
+											<p th:if="${variantsEN.size() == 0}" style="text-align: center; padding-top: 1rem">There is no variants yet</p>
 											<table th:if="${variantsEN.size() != 0}" class="table table-bordered table-hover">
 												<tr th:each="variant : ${variantsEN}">
 													<td th:text="${variant.getVariantName()}"></td>
@@ -148,7 +148,7 @@
 									</div>
 									<div class="carousel-item">
 										<div class="table-responsive">
-											<p th:if="${variantsDE.size() == 0}" style="text-align: center">There is no variants yet</p>
+											<p th:if="${variantsDE.size() == 0}" style="text-align: center; padding-top: 1rem">There is no variants yet</p>
 											<table th:if="${variantsDE.size() != 0}" class="table table-bordered table-hover">
 												<tr th:each="variant : ${variantsDE}">
 													<td th:text="${variant.getVariantName()}"></td>
@@ -161,7 +161,7 @@
 									</div>
 									<div class="carousel-item">
 										<div class="table-responsive">
-											<p th:if="${variantsFR.size() == 0}" style="text-align: center">There is no variants yet</p>
+											<p th:if="${variantsFR.size() == 0}" style="text-align: center; padding-top: 1rem">There is no variants yet</p>
 											<table th:if="${variantsFR.size() != 0}" class="table table-bordered table-hover">
 												<tr th:each="variant : ${variantsFR}">
 													<td th:text="${variant.getVariantName()}"></td>
@@ -174,7 +174,7 @@
 									</div>
 									<div class="carousel-item">
 										<div class="table-responsive">
-											<p th:if="${variantsES.size() == 0}" style="text-align: center">There is no variants yet</p>
+											<p th:if="${variantsES.size() == 0}" style="text-align: center; padding-top: 1rem">There is no variants yet</p>
 											<table th:if="${variantsES.size() != 0}" class="table table-bordered table-hover">
 												<tr th:each="variant : ${variantsES}">
 													<td th:text="${variant.getVariantName()}"></td>

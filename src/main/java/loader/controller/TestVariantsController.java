@@ -1,28 +1,28 @@
 package loader.controller;
 
-import loader.custom.VariantForm;
+import java.util.List;
+import java.io.IOException;
+
 import loader.entity.User;
 import loader.entity.Language;
-import loader.exception.VariantNameExists;
+
+import loader.custom.VariantForm;
 import loader.service.VariantService;
+import loader.exception.VariantNameExists;
 import loader.repository.VariantRepository;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
 @RequestMapping("/testVariants")
 public class TestVariantsController {
 
-    private final VariantRepository variantRepository;
     private final VariantService variantService;
+    private final VariantRepository variantRepository;
 
     public TestVariantsController(VariantService variantService,
                                   VariantRepository variantRepository)
@@ -50,9 +50,19 @@ public class TestVariantsController {
         return new ModelAndView("redirect:/testVariants");
     }
 
-    @PostMapping("/{lang:[a-z]{2}}")
-    public ModelAndView deleteVariant(@RequestParam(value = "variantId") List<Long> variantId, @PathVariable Language lang) {
+    @PostMapping("/{lang:[a-z]{2}}/delete")
+    public ModelAndView deleteVariant(@RequestParam(value = "variantId") List<Long> variantId,
+                                      @PathVariable Language lang)
+    {
         variantService.deleteVariants(variantId);
+        return new ModelAndView("redirect:/testVariants/" + lang);
+    }
+
+    @PostMapping("/{lang:[a-z]{2}}/share")
+    public ModelAndView shareVariant(@RequestParam(value = "variantId") List<Long> variantId,
+                                     @PathVariable Language lang)
+    {
+        variantService.shareVariants(variantId);
         return new ModelAndView("redirect:/testVariants/" + lang);
     }
 

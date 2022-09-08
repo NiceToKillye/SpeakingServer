@@ -52,7 +52,7 @@
                 <button id="usernameButton" class="btn btn-outline-secondary" type="submit">Enter</button>
             </div>
 
-            <div class="container">
+            <div class="container pt-3">
                 <div class="row">
                     <div class="form-check col-auto pt-3 pb-3" th:each="variant : ${variants}">
                         <input class="form-check-input" type="radio" th:id="${variant.getId()}" th:value="${variant.getId()}" name="variantId">
@@ -61,6 +61,22 @@
                 </div>
             </div>
         </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="warningModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="warningModalLabel">Something went wrong!</h5>
+                </div>
+                <div class="modal-body">
+                    There are no available variants, or you didn't enter surname!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -73,14 +89,17 @@
         });
 
         function validateForm() {
+            let variants = document.getElementsByName("variantId");
             let inputField = document.forms["variantForm"]["inputName"].value;
-            if(inputField == null || inputField === ""){
-                alert("Please enter your surname");
+            if(inputField == null || inputField === "" || variants.length === 0){
+                jQuery('#warningModal').modal('show');
+                //alert("Please enter your surname");
                 return false;
             }
             return true;
         }
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
 
 </body>

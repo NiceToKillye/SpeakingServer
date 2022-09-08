@@ -26,8 +26,6 @@
         margin-bottom: 3%;
         margin-left: auto !important;
         margin-right: auto;
-
-        width: 100px;
     }
 
     #deleteExamTable {
@@ -89,4 +87,8 @@ table td button {
 
     margin-left: auto;
     margin-right: auto;
+}
+
+.btn.btn-light {
+    width: 142px;
 }

@@ -13,84 +13,149 @@
 
 <body>
 
-<div class="container" id="teachersContainer">
-    <div class="table-responsive">
-    <table class="table table-bordered border-primary" id="teachersTable">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img th:src="@{/icons/English-03.svg}" width="50" height="50" class="d-inline-block align-text-center">
+                Speaking-ege
+            </a>
 
-        <tr class="head">
-            <th scope="col">Id</th>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Enabled</th>
-            <th scope="col">Actions</th>
-        </tr>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <tr th:each="teacher : ${teachers}">
-            <td class="text" data-th="Id:" th:text="${teacher.getId()}"></td>
-            <td class="text" data-th="Username:" th:text="${teacher.getUsername()}"></td>
-            <td class="text" data-th="Email:" th:text="${teacher.getEmail()}"></td>
-            <td class="text" data-th="Enabled:" th:text="${teacher.isEnabled()}"></td>
-            <td>
-                <button type="button" class="btn btn-primary" th:disabled="${teacher.isEnabled()}" th:attr="onclick=|enableTeacher('${teacher.getId()}')|">Enable</button>
-                <button type="button" class="btn btn-danger" th:attr="onclick=|deleteTeacher('${teacher.getId()}')|">Delete</button>
-            </td>
-        </tr>
-
-    </table>
-    </div>
-
-    <div class="row text-center">
-        <div class="col">
-            <button type="submit" class="btn btn-primary" onclick="location.href='/logout';">Logout</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">User update</h5>
-            </div>
-            <div class="modal-body">
-                You have successfully updated user
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="window.location.href = '/admin'">Understood</button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="btn btn-light" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#deleteVariantModel">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                            </svg>
+                            Delete variant
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-light" aria-current="page" href="#" th:href="@{/logout}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-door-closed" viewBox="0 0 16 16">
+                                <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
+                                <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
+                            </svg>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
+    </nav>
+
+    <div class="container" id="teachersContainer">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="teachersTable">
+
+                <tr class="head">
+                    <th scope="col">Id</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Enabled</th>
+                    <th scope="col">Actions</th>
+                </tr>
+
+                <tr th:each="teacher : ${teachers}">
+                    <td class="text" data-th="Id:" th:text="${teacher.getId()}"></td>
+                    <td class="text" data-th="Username:" th:text="${teacher.getUsername()}"></td>
+                    <td class="text" data-th="Email:" th:text="${teacher.getEmail()}"></td>
+                    <td class="text" data-th="Enabled:" th:text="${teacher.isEnabled()}"></td>
+                    <td>
+                        <button type="button" class="btn btn-primary" th:disabled="${teacher.isEnabled()}" th:attr="onclick=|enableTeacher('${teacher.getId()}')|">Enable</button>
+                        <button type="button" class="btn btn-danger" th:attr="onclick=|deleteTeacher('${teacher.getId()}')|">Delete</button>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
     </div>
-</div>
 
-<script>
-    function enableTeacher(teacherId) {
-        let formData = new FormData();
-        formData.append("teacherId", teacherId);
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">User update</h5>
+                </div>
+                <div class="modal-body">
+                    You have successfully updated user
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href = '/admin'">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        sendRequest("/admin/enable", formData)
-    }
+    <div class="modal fade" id="deleteVariantModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel1">Delete variant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p th:if="${variants.size() != 0}" align="center">Select variants to delete</p>
+                    <p th:if="${variants.size() == 0}" align="center">There is no variants yet</p>
 
-    function deleteTeacher(teacherId) {
-        let formData = new FormData();
-        formData.append("teacherId", teacherId);
+                    <form id="deleteVariant" name="deleteVariant" th:action="${#request.requestURI + '/variants/delete'}" method="POST" onsubmit="return validateForm();">
+                        <div class="table-responsive" id="deleteVariantTable">
 
-        sendRequest("/admin/delete", formData)
-    }
+                            <table class="table table-bordered table-hover">
+                                <tr th:each="variant : ${variants}">
+                                    <td th:text="${variant.getVariantName()}"></td>
+                                    <td>
+                                        <input class="form-check-input" type="checkbox" th:id="${variant.getId()}" th:value="${variant.getId()}" name="variantId">
+                                    </td>
+                                </tr>
+                            </table>
 
-    async function sendRequest(path, formData) {
-        let request = new XMLHttpRequest();
-        request.onload = function (e) {
-            console.log("Server returned: ", e.target.responseText);
-        };
-        request.open("POST", path);
-        request.send(formData);
+                        </div>
+                    </form>
 
-        jQuery('#staticBackdrop').modal('show');
-    }
-</script>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" form="deleteVariant" class="btn btn-primary">Delete</button>
+                </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function enableTeacher(teacherId) {
+            let formData = new FormData();
+            formData.append("teacherId", teacherId);
+
+            sendRequest("/admin/enable", formData)
+        }
+
+        function deleteTeacher(teacherId) {
+            let formData = new FormData();
+            formData.append("teacherId", teacherId);
+
+            sendRequest("/admin/delete", formData)
+        }
+
+        async function sendRequest(path, formData) {
+            let request = new XMLHttpRequest();
+            request.onload = function (e) {
+                console.log("Server returned: ", e.target.responseText);
+            };
+            request.open("POST", path);
+            request.send(formData);
+
+            jQuery('#staticBackdrop').modal('show');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
 </body>
 </html>
