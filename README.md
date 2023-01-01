@@ -58,3 +58,13 @@ Task page.
 <img width="1512" alt="Снимок экрана 2023-01-01 в 10 31 03 PM" src="https://user-images.githubusercontent.com/55396628/210176740-fb1fe31b-ee45-40b2-9d36-cc3900cd827b.png">
 Teacher page. Teacher can download or play audio.
 
+<hr>
+
+<img width="1512" alt="free training" src="https://user-images.githubusercontent.com/55396628/210177568-bdd87513-f95f-4625-8b85-c27746177504.png">
+Free training page. This page is available for non-registered users.
+
+<hr>
+
+<img width="1512" alt="free training 2" src="https://user-images.githubusercontent.com/55396628/210177585-51b5e139-f379-44ba-8263-23e1fcbc3eca.png">
+Free training. Here user can see variants and start test exam.
+
