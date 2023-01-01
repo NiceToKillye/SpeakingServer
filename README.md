@@ -1,74 +1,60 @@
 # SpeakingServer
-This is a web application for english teacher
 
-
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 23 03 AM" src="https://user-images.githubusercontent.com/55396628/163740306-569aa396-36ca-4813-8a84-4080a6108fbf.png">
-
-This is a login page. After login SuccessHandler redirects user to custom page depends on their role: TEACHER, ADMIN or EXAM.
+<img width="1512" alt="Main" src="https://user-images.githubusercontent.com/55396628/210176491-84517b98-9e21-4df0-a5d7-a1bd80545f4e.png">
+This is the main page.
 
 <hr>
 
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 24 18 AM" src="https://user-images.githubusercontent.com/55396628/163740386-c34f6166-2a18-43d2-a0f8-0129a7ac49fe.png">
-
-This is a registration page. Teachers register hier.
-
-<hr>
-
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 26 01 AM" src="https://user-images.githubusercontent.com/55396628/163740495-caf5750b-049b-4230-93d3-e82a731a6500.png">
-
-After registration teachers' account is disabled. So admin might accept teachers' request.
+<img width="1512" alt="1" src="https://user-images.githubusercontent.com/55396628/210176294-bca1f172-af52-4eb9-9d6f-10a7fc0b81c7.png">
+Login page.
 
 <hr>
 
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 30 51 AM" src="https://user-images.githubusercontent.com/55396628/163740774-581b89a0-b78a-4e16-9176-030ec7e40822.png">
-
-Teacher can create/delete exam, add/delete variant. Also teacher has access to page where all variants are shown.
-
-<hr>
-
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 29 51 AM" src="https://user-images.githubusercontent.com/55396628/163740715-21f45da6-0621-4413-a962-c0a2306f7434.png">
-
-To create new variant teacher has to fill form. There are 4 task fields and 3 file inputs.
+<img width="1512" alt="2" src="https://user-images.githubusercontent.com/55396628/210176324-997244d9-fe8b-417f-9842-b84f9abedbfa.png">
+Registration page. Here teachers register.
 
 <hr>
 
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 32 32 AM" src="https://user-images.githubusercontent.com/55396628/163740879-c19490f6-c8ba-4391-adf8-6432c61f5330.png">
-
-To create new exam teacher just need to choose date. After submit teacher will recieve an email with date of exam, login and password.
-
-<hr>
-
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 33 40 AM" src="https://user-images.githubusercontent.com/55396628/163740944-5a8f92b9-175f-4383-a72a-e7bad585cbde.png">
-
-On "Test Variants" page teacher can see all variants and everything what variant contains.
+<img width="1512" alt="3" src="https://user-images.githubusercontent.com/55396628/210176372-8e94aec2-3cd8-4ac8-a611-62024b6b9f3f.png">
+Admin page. Admin can enable new user account or delete it. Also admin can manage shared variants.
 
 <hr>
 
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 35 23 AM" src="https://user-images.githubusercontent.com/55396628/163741036-0d25626f-1445-4f52-8132-d4be6cc14168.png">
-
-To delete exam teacher need to choose login of exam and submit the request.
-
-<hr>
-
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 35 53 AM" src="https://user-images.githubusercontent.com/55396628/163741066-af109094-9514-4b60-adeb-c337635a912f.png">
-
-To delete variant teacher can choose it from list and submit the request.
+<img width="1512" alt="4" src="https://user-images.githubusercontent.com/55396628/210176410-68fa087f-740f-489a-aac6-e137759af9b4.png">
+Teacher main page. On this page teacher can examine created exams and manage them.
 
 <hr>
 
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 37 25 AM" src="https://user-images.githubusercontent.com/55396628/163741172-1d939b3f-5786-464b-b473-cd7d4685b22b.png">
-
-When you login as EXAM you might write your surname and choose variant.
-
-<hr>
-
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 37 55 AM" src="https://user-images.githubusercontent.com/55396628/163741217-33b004c4-6420-4df3-b48e-e263ec5e6b53.png">
-
-As you wtite it exam starts. It will change tasks and notify student to start speaking.
+<img width="1512" alt="6" src="https://user-images.githubusercontent.com/55396628/210176465-d55a1690-1448-4c26-bf67-447f1913bd44.png">
+Modal to create new exam.
 
 <hr>
 
-<img width="1440" alt="Снимок экрана 2022-04-18 в 8 39 15 AM" src="https://user-images.githubusercontent.com/55396628/163741319-20060860-3c67-436e-b41f-18e10da050e5.png">
+<img width="1512" alt="Delete exam" src="https://user-images.githubusercontent.com/55396628/210176698-dc605ed5-8217-43e8-9519-f9e9c1b093ec.png">
+Modal to delete exam.
 
-As student complete exam his audio woud be stored. And teacher can listen to every students' audio participated in particular exam.
+<hr>
+
+<img width="1512" alt="5" src="https://user-images.githubusercontent.com/55396628/210176592-18280efc-1faf-4e01-b5f1-2d4713781965.png">
+Test variants page. Here teacher can create new variant or choose language and examine own variants.
+
+<hr>
+
+<img width="1512" alt="Delete variant" src="https://user-images.githubusercontent.com/55396628/210176708-4c05bbf5-8b19-47bf-b76f-80c93f497eee.png">
+Modal to delete variant.
+
+<hr>
+
+<img width="1512" alt="Exam" src="https://user-images.githubusercontent.com/55396628/210176720-4dcd481a-54ca-4726-b929-95aa5bf75911.png">
+Exam page.
+
+<hr>
+
+<img width="1512" alt="Test" src="https://user-images.githubusercontent.com/55396628/210176729-22aadfad-b167-41ee-800b-120ac05a6574.png">
+Task page.
+
+<hr>
+
+<img width="1512" alt="Снимок экрана 2023-01-01 в 10 31 03 PM" src="https://user-images.githubusercontent.com/55396628/210176740-fb1fe31b-ee45-40b2-9d36-cc3900cd827b.png">
+Teacher page. Teacher can download or play audio.
 
