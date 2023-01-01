@@ -40,14 +40,25 @@
 </div>
 
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Congratulations!</h5>
             </div>
             <div class="modal-body">
-                This is the end of the exam! Now you can listen to the recording and download it!
-                <audio id="recordedAudio" style="width: 100%; padding-top: 5%"></audio>
+                <div class="container-fluid text-center">
+                    <p>This is the end of the exam! Now you can listen to the recording and download it!</p>
+                    <div id="waveform" class="mb-3"></div>
+
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-primary btn-lg" onclick="wavesurfer.playPause()">Play/Stop</button>
+                        </div>
+                        <div class="col">
+                            <a download="audio.webm" class="btn btn-primary btn-lg" id="downloadAudio">Download</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" onclick="window.location.href = '/training'">Ok</button>
@@ -55,6 +66,9 @@
         </div>
     </div>
 </div>
+
+<script src="https://unpkg.com/wavesurfer.js@6.1.0/dist/wavesurfer.js"></script>
+<script src="https://unpkg.com/wavesurfer.js@6.1.0/dist/plugin/wavesurfer.cursor.min.js"></script>
 
 <script>
     const task1 = document.getElementById('task1');
@@ -74,8 +88,6 @@
     const image2Link = "[[${variant.getPhotoLink2()}]]";
     const image3Link = "[[${variant.getPhotoLink3()}]]";
 
-    const recordedAudio = document.getElementById('recordedAudio');
-
     navigator.permissions.query({name:'microphone'}).then(function(result) {
         if (result.state === 'granted') {
             navigator.mediaDevices.getUserMedia({ audio: true }).then(recordAudio);
@@ -86,6 +98,34 @@
                 console.log(e);
             });
         }
+    });
+
+    var wavesurfer = WaveSurfer.create({
+        container: '#waveform',
+        barWidth: 4,
+        barHeight: 1,
+        barRadius: 3,
+        waveColor: 'white',
+
+        backgroundColor: '#0d6efd',
+        progressColor: '#E0E0E0',
+
+        plugins: [
+            WaveSurfer.cursor.create({
+                showTime: true,
+                opacity: 1,
+                customShowTimeStyle: {
+                    'background-color': '#000',
+                    color: '#fff',
+                    padding: '2px',
+                    'font-size': '14px'
+                }
+            })
+        ]
+    });
+
+    wavesurfer.on('ready', function () {
+        wavesurfer.play();
     });
 
     const recordAudio = function(stream) {
@@ -133,10 +173,9 @@
 
         mediaRecorder.addEventListener('stop', async function () {
             let blob = new Blob(recordedChunks, {type: "audio/webm"});
-
-            recordedAudio.src = URL.createObjectURL(blob);
-            recordedAudio.controls = true;
-            recordedAudio.title = "Your_recording!.webm";
+            let src = URL.createObjectURL(blob);
+            document.getElementById('downloadAudio').href = src;
+            wavesurfer.load(src);
 
             jQuery('#staticBackdrop').modal('show');
         });
